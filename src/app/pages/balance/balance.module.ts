@@ -1,9 +1,9 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { SharedModule } from '@shared/shared.module';
 import { BalanceComponent } from './balance.component';
 import { NgApexchartsModule } from 'ng-apexcharts';
+import { IonicModule } from '@ionic/angular';
 
 const routes: Routes = [
     {
@@ -16,7 +16,7 @@ const routes: Routes = [
     declarations: [BalanceComponent],
     imports: [
         CommonModule,
-        SharedModule,
+        IonicModule,
         NgApexchartsModule,
         RouterModule.forChild(routes)
     ],

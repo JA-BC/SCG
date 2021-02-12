@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Routes, RouterModule } from '@angular/router';
 import { PagesComponent } from './pages.component';
-import { SharedModule } from '../shared/shared.module';
+import { IonicModule } from '@ionic/angular';
 
 const routes: Routes = [
     { path: '', redirectTo: 'balance', pathMatch: 'full' },
@@ -47,7 +47,7 @@ const routes: Routes = [
     ],
     imports: [
         CommonModule,
-        SharedModule,
+        IonicModule,
         RouterModule.forChild(routes)
     ],
     exports: [],

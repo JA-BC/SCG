@@ -4,4 +4,9 @@
   padding: 1px;
   margin: .75rem .5rem;
   opacity: .6;
+
+  .dark-theme & {
+    opacity: 1;
+  }
+
 }

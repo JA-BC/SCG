@@ -4,7 +4,9 @@ import { Routes, RouterModule } from '@angular/router';
 import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
 import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
-import { SharedModule } from '@shared/shared.module';
+import { FormsModule } from '@angular/forms';
+import { CoreModule } from '@core/core.module';
+import { IonicModule } from '@ionic/angular';
 
 const routes: Routes = [
     { path: '', redirectTo: 'login', pathMatch: 'full' },
@@ -35,7 +37,9 @@ const routes: Routes = [
     ],
     imports: [
         CommonModule,
-        SharedModule,
+        IonicModule,
+        FormsModule,
+        CoreModule,
         RouterModule.forChild(routes)
     ],
     exports: [],

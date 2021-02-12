@@ -1,16 +1,13 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { IonicModule } from '@ionic/angular';
+import { ThemeService } from '@core/services/theme.service';
 
 @NgModule({
   declarations: [],
   imports: [
-    CommonModule,
-    IonicModule.forRoot()
+    CommonModule
   ],
-  exports: [
-    IonicModule
-  ],
+  exports: [],
   providers: [],
 })
 export class SharedModule {}

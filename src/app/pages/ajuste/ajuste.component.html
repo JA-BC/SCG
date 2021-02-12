@@ -32,7 +32,9 @@
                 <ion-label color="dark" class="ion-ml-3">
                     <span class="ion-font-md">Dark Mode</span>
                 </ion-label>
-                <ion-toggle color="primary" slot="end"></ion-toggle>
+                <ion-toggle color="primary" slot="end" name="darkTheme"
+                    [(ngModel)]="theme.isDarkTheme" (ionChange)="theme.toggleDarkTheme()">
+                </ion-toggle>
             </ion-item>
 
             <ion-list-header>

@@ -7,17 +7,18 @@
         position: relative;
         margin-top: -57px;
         --background: var(--ion-color-primary);
-        --color: var(--ion-color-white);
-        --color-selected: var(--ion-color-white);
+        --color: var(--ion-color-primary-contrast);
+        --color-selected: var(--ion-color-primary-contrast);
         --height: 4rem;
         border-radius: 50%;
         height: var( --height);
         flex: 0 0 var( --height);
-        border: 8px solid #fff;
+        border: 8px solid var(--ion-color-white);
 
         &::before {
-            content: '';
             --width: calc(100% + 16px);
+            --border: 1px solid var(--ion-color-secondary);
+            content: '';
             position: absolute;
             top: -8px;
             left: -8px;
@@ -25,7 +26,7 @@
             height: var(--width);
             background-color: transparent;
             border-radius: 50%;
-            border: 1px solid var(--ion-color-secondary);
+            border: var(--border);
             border-top-color: transparent;
             border-right-color: transparent;
             box-sizing: border-box;
@@ -35,6 +36,11 @@
         .ios & {
             margin-top: -50px;
         }
+    }
+
+    .dark-theme &,
+    .dark-theme & ion-tab-button::before{
+        --border: none;
     }
 }
  
