@@ -1,0 +1,68 @@
+
+
+@each $abbrv, $prop in (m: margin, p: padding) {
+    @each $size, $value in map-merge($spacers, ('auto': auto)) {
+        .ion-#{$abbrv}-#{$size} {
+            #{$prop}: $value !important;
+        }
+
+        .ion-#{$abbrv}x-#{$size} {
+            #{$prop}-left: $value !important;
+            #{$prop}-right: $value !important;
+        }
+
+        .ion-#{$abbrv}y-#{$size} {
+            #{$prop}-top: $value !important;
+            #{$prop}-bottom: $value !important;
+        }
+
+        .ion-#{$abbrv}t-#{$size} {
+            #{$prop}-top: $value !important;
+        }
+
+        .ion-#{$abbrv}l-#{$size} {
+            #{$prop}-left: $value !important;
+        }
+
+        .ion-#{$abbrv}r-#{$size} {
+            #{$prop}-right: $value !important;
+        }
+
+        .ion-#{$abbrv}b-#{$size} {
+            #{$prop}-bottom: $value !important;
+        }
+
+        @if $prop == margin and $value != auto {
+            .ion-#{$abbrv}-n#{$size} {
+                #{$prop}: -$value !important;
+            }
+
+            .ion-#{$abbrv}x-n#{$size} {
+                #{$prop}-left: -$value !important;
+                #{$prop}-right: -$value !important;
+            }
+    
+            .ion-#{$abbrv}y-n#{$size} {
+                #{$prop}-top: -$value !important;
+                #{$prop}-bottom: -$value !important;
+            }
+    
+            .ion-#{$abbrv}t-n#{$size} {
+                #{$prop}-top: -$value !important;
+            }
+    
+            .ion-#{$abbrv}l-n#{$size} {
+                #{$prop}-left: -$value !important;
+            }
+    
+            .ion-#{$abbrv}r-n#{$size} {
+                #{$prop}-right: -$value !important;
+            }
+    
+            .ion-#{$abbrv}b-n#{$size} {
+                #{$prop}-bottom: -$value !important;
+            }
+        }
+    }
+}
+

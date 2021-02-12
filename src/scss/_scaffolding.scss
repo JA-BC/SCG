@@ -1,0 +1,18 @@
+
+// Overide default values
+
+// Fix routerLink black border onFocus
+:focus {
+    outline: 0 !important;
+}
+  
+ion-button {
+    --box-shadow: none;
+    text-transform: none;
+    letter-spacing: normal;
+}
+
+ion-card {
+    margin: .5rem 1rem;
+}
+

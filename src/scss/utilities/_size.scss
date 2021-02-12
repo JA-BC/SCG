@@ -1,0 +1,20 @@
+
+
+@each $size in (0, 25, 50, 75, 100, auto) {
+    .ion-w-#{$size} {
+        @if $size == auto {
+            width: $size !important;
+        } @else {
+            width: #{$size + '%'} !important;
+        }
+    }
+
+    .ion-h-#{$size} {
+        @if $size == auto {
+            height: $size !important;
+        } @else {
+            height: #{$size + '%'} !important;
+        }
+    }
+}
+

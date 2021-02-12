@@ -1,0 +1,25 @@
+// No padding if has any input in ion-item
+ion-item.item-input::part(native) {
+    padding: 0;
+  }
+  
+.ion-input-custom {
+    --padding-bottom: .75rem !important;
+    --padding-top: .75rem !important;
+    --padding-start: 1rem !important;
+    --padding-end: 1rem !important;
+    --background: var(--ion-color-light);
+    --border-radius: .25rem;
+    --margin-top: 1rem;
+    --placeholder-color: var(--ion-color-medium);
+    --color: var(--ion-color-dark);
+
+    margin-top: var(--margin-top);
+    border-radius: var(--border-radius);
+}
+  
+ion-item.item-input.has-error ion-input {
+    border-right: 4px solid var(--ion-color-danger);
+    --background: rgba(var(--ion-color-danger-rgb), .1);
+    --placeholder-color: var(--ion-color-danger-tint);
+}

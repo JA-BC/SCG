@@ -1,0 +1,51 @@
+
+.ion-round { --ion-round: 4px; border-radius: var(--ion-round) !important; }
+.ion-round-top { --ion-round: 4px; border-radius: var(--ion-round) var(--ion-round) 0 0 !important; }
+.ion-round-left { --ion-round: 4px; border-radius: var(--ion-round) 0 0 var(--ion-round) !important; }
+.ion-round-bottom { --ion-round: 4px; border-radius: 0 0 var(--ion-round) var(--ion-round) !important; }
+.ion-round-right { --ion-round: 4px; border-radius: 0 var(--ion-round) var(--ion-round) 0 !important; }
+
+.ion-round-sm { --ion-round: 3px; }
+.ion-round-lg { --ion-round: 6px; }
+.ion-round-xl { --ion-round: 8px; }
+.ion-round-25 { --ion-round: 25px; }
+.ion-round-50 { --ion-round: 50px; }
+.ion-round-circle { --ion-round: 50%; }
+.ion-round-0 { --ion-round: 0; }
+
+.ion-border { border: 1px solid; }
+
+@each $direction, $value in (top, left, right, bottom) {
+    .ion-border-#{$direction} {
+        border-#{$direction}: 1px solid !important;
+    }
+
+    .ion-border-#{$direction}-0 {
+        border-#{$direction}: none !important;
+    }
+}
+
+@each $key, $value in $colors {
+    .ion-border-#{$key} {
+        border-color: $value !important;
+    }   
+}
+
+.ion-shadow { 
+    box-shadow: 1px 1px 4px rgba(0, 0, 0, .08) !important;
+    --box-shadow: 1px 1px 4px rgba(0, 0, 0, .08) !important;
+
+    // ion-header and ion-footer
+    &::after {
+        display: none !important;
+    }
+}
+.ion-shadow-0 {
+    box-shadow: none !important;
+    --box-shadow: none !important;
+
+    // ion-header and ion-footer
+    &::after {
+        display: none !important;
+    }
+}

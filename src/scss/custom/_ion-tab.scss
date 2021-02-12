@@ -1,0 +1,40 @@
+.ion-tab-bar-custom {
+    contain: none;
+    --border: 1px solid var(--ion-color-secondary);
+
+    ion-tab-button:nth-child(3) {
+        z-index: 1;
+        position: relative;
+        margin-top: -57px;
+        --background: var(--ion-color-primary);
+        --color: var(--ion-color-white);
+        --color-selected: var(--ion-color-white);
+        --height: 4rem;
+        border-radius: 50%;
+        height: var( --height);
+        flex: 0 0 var( --height);
+        border: 8px solid #fff;
+
+        &::before {
+            content: '';
+            --width: calc(100% + 16px);
+            position: absolute;
+            top: -8px;
+            left: -8px;
+            width: var(--width);
+            height: var(--width);
+            background-color: transparent;
+            border-radius: 50%;
+            border: 1px solid var(--ion-color-secondary);
+            border-top-color: transparent;
+            border-right-color: transparent;
+            box-sizing: border-box;
+            transform: rotate(314deg); 
+        }
+
+        .ios & {
+            margin-top: -50px;
+        }
+    }
+}
+ 

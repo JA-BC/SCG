@@ -1,0 +1,54 @@
+<ion-header class="ion-no-border" translucent>
+    <ion-toolbar>
+        <ion-title class="ion-no-padding ion-text-center">
+            <h6 class="ion-font-bold ion-m-0 ion-font-md">Categories</h6>
+            <ion-text color="medium">
+                <small class="ion-font-sm">
+                    Dolor ut consectetur illum.
+                </small>
+            </ion-text>
+        </ion-title>
+    </ion-toolbar>
+</ion-header>
+
+<ion-content fullscreen>
+    <div class="fade-animation">
+        <br>
+        <ion-row>
+            <ion-col size="12">
+                <ion-segment color="primary" value="ingreso">
+                    <ion-segment-button value="ingreso">
+                        <ion-label class="ion-text-capitalize">
+                            <span class="ion-font-md">Ingresos</span>
+                        </ion-label>
+                    </ion-segment-button>
+                    <ion-segment-button value="gasto">
+                        <ion-label class="ion-text-capitalize">
+                            <span class="ion-font-md">Gastos</span>
+                        </ion-label>
+                    </ion-segment-button>
+                </ion-segment>
+            </ion-col>
+        </ion-row>
+
+        <ion-row>
+            <ion-col size="12">
+                <ion-button color="medium" expand="block" fill="outline" routerLink="/app/categoria-form"
+                    style="--border-width: 1px; --border-style: dashed;">
+                     <ion-icon name="add"></ion-icon>
+                        Agregar tipo ingreso
+                </ion-button>
+            </ion-col>
+        </ion-row>
+        
+        <ion-list class="ion-py-2" lines="none">
+            <ion-item button>
+                <ion-badge color="primary" class="ion-round ion-round-circle ion-block ion-p-2"></ion-badge>
+                <ion-label color="dark" class="ion-ml-3">
+                    <span class="ion-font-md">Ingreso 1</span>
+                </ion-label>
+            </ion-item>
+        </ion-list>
+
+    </div>
+</ion-content>

@@ -1,0 +1,9 @@
+.apexcharts-legend-marker {
+    border-radius: 4px !important;
+}
+  
+.apexcharts-canvas {
+    @media screen and (max-width: 576px) {
+        margin-left: -2rem !important;
+    }
+}

@@ -1,0 +1,32 @@
+
+$colors: (
+    'primary': var(--ion-color-primary),
+    'secondary': var(--ion-color-secondary),
+    'tertiary': var(--ion-color-tertiary),
+    'success': var(--ion-color-success),
+    'warning': var(--ion-color-warning),
+    'danger': var(--ion-color-danger),
+    'medium': var(--ion-color-medium),
+    'light': var(--ion-color-light),
+    'dark': var(--ion-color-dark),
+    'white': var(--ion-color-white)
+);
+
+$breakpoints: (
+    'xs': 0,
+    'sm': 576px,
+    'md': 768px,
+    'lg': 992px,
+    'xl': 1200px
+);
+
+$spacer: 1rem;
+
+$spacers: (
+    0: 0,
+    1: ($spacer * .25),
+    2: ($spacer * .5),
+    3: $spacer,
+    4: ($spacer * 1.5),
+    5: ($spacer * 3)
+);

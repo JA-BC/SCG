@@ -1,0 +1,12 @@
+
+
+.ion-bg-transparent {
+    --background: transparent;
+}
+
+@each $key, $value in $colors {
+    .ion-bg-#{$key} {
+        --background: #{$value};
+    }
+}
+

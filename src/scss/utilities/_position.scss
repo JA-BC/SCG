@@ -1,0 +1,36 @@
+
+.ion-fixed { position: fixed !important; }
+.ion-absolute { position: absolute !important; }
+.ion-relative { position: relative !important; }
+
+.ion-block { display: block !important; }
+.ion-inline-block { display: inline-block !important; }
+.ion-none { display: none !important; }
+
+.ion-opacity-1 { opacity: 1 !important; }
+.ion-opacity-0 { opacity: 0 !important; }
+
+$positions: map-merge($spacers, (
+    '25': 25%,
+    '50': 50%,
+    '75': 75%,
+    '100': 100%
+));
+
+@each $prop in (top, left, right, bottom) {
+    @each $size, $value in $positions {
+        .ion-#{$prop}-#{$size} {
+            #{$prop}: $value !important;
+        }
+    }       
+}
+
+@for $i from 1 through 10 {
+    .ion-index-#{$i} {
+        z-index: ($i * 100) - 1;
+    }
+}
+
+.ion-index-n1 {
+    z-index: -1;
+}

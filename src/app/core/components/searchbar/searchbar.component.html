@@ -1,0 +1,7 @@
+
+
+<ion-searchbar [color]="color" class="ion-shadow-0 ion-round" style="color: var(--ion-color-medium);"
+    [placeholder]="placeholder" mode="md" [enterkeyhint]="'search'" [debounce]="debounce" #ionsearch
+    (keyup.enter)="onResearch(ionsearch.value)" (ionChange)="onResearch(ionsearch.value)">
+</ion-searchbar>
+

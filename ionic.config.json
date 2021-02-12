@@ -1,0 +1,7 @@
+{
+  "name": "MOPC_Mobile",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}

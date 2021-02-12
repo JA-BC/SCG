@@ -1,0 +1,17 @@
+
+<ion-item lines="none" class="ion-bg-transparent" [ngClass]="{'has-error': ctrl?.invalid && (ctrl?.touched && ctrl?.dirty)}">
+    <ng-container *ngIf="label">
+        <ion-label [position]="labelPosition" [color]="labelColor" [ngClass]="[labelClass]">
+            {{ label }}
+        </ion-label>
+    </ng-container>
+    <ng-content></ng-content>
+    <ng-container *ngIf="ctrl && ctrl?.invalid && (ctrl?.touched && ctrl?.dirty)">
+        <div class="fade-animation ion-mt-1">
+            <ion-text [color]="errorColor">
+                <small>{{ this.errorMsg }}</small>
+            </ion-text>
+        </div>
+    </ng-container>
+</ion-item>
+
