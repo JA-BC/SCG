@@ -1,0 +1,34 @@
+{
+    "data": [
+        {
+            "Nombre": "Sueldo",
+            "Costo": 200000,
+            "CategoriaId": 1,
+            "Fecha": "11-12-2021"
+        },
+        {
+            "Nombre": "Gasto de Venta",
+            "Costo": 2000,
+            "CategoriaId": 2,
+            "Fecha": "01-01-2021"
+        },
+        {
+            "Nombre": "Venta de Productos",
+            "Costo": 100000,
+            "CategoriaId": 1,
+            "Fecha": "11-12-2021"
+        },
+        {
+            "Nombre": "Pago de Internet",
+            "Costo": 1200,
+            "CategoriaId": 2,
+            "Fecha": "29-12-2021"
+        },
+        {
+            "Nombre": "Comida Diaria",
+            "Costo": 100,
+            "CategoriaId": 2,
+            "Fecha": "08-12-2021"
+        }
+    ]
+}

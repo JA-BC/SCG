@@ -3,18 +3,18 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
-import { FormComponent } from './form.component';
+import { BalanceFormComponent } from './form.component';
 import { CoreModule } from '@core/core.module';
 
 const routes: Routes = [
     {
         path: '',
-        component: FormComponent
+        component: BalanceFormComponent
     }
 ];
 
 @NgModule({
-    declarations: [FormComponent],
+    declarations: [BalanceFormComponent],
     imports: [
         CommonModule,
         IonicModule,
@@ -25,4 +25,4 @@ const routes: Routes = [
     exports: [],
     providers: [],
 })
-export class FormModule { }
+export class BalanceFormModule { }

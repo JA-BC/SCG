@@ -30,7 +30,7 @@ export class InputWrapperComponent implements OnInit {
     ) { }
 
     ngOnInit() {
-        this.ctrl.statusChanges.pipe(
+        this.ctrl?.statusChanges.pipe(
             takeUntil(this.destroy$)
         ).subscribe(() => this.getCtrlValidationMsg());
     }

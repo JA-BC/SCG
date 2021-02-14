@@ -23,3 +23,14 @@ ion-item.item-input.has-error ion-input {
     --background: rgba(var(--ion-color-danger-rgb), .1);
     --placeholder-color: var(--ion-color-danger-tint);
 }
+
+.ion-select-custom {
+    background: var(--ion-color-light);
+    border-radius: 4px;
+
+    &::part(icon) {
+        margin-right: 8px;
+    }
+
+}
+

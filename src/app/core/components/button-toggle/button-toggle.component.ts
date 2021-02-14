@@ -1,9 +1,17 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, OnInit, Input, forwardRef, Output, ChangeDetectionStrategy, ViewEncapsulation } from '@angular/core';
+import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { TPairs } from 'src/app/core/interfaces/type';
+
+const BUTTON_TOGGLE_VALUE_ACCESSOR = {
+    provide: NG_VALUE_ACCESSOR,
+    useExisting: forwardRef(() => ButtonToggleComponent),
+    multi: true
+};
 
 @Component({
   selector: 'ion-button-toggle',
-  templateUrl: './button-toggle.component.html'
+  templateUrl: './button-toggle.component.html',
+  providers: [BUTTON_TOGGLE_VALUE_ACCESSOR]
 })
 export class ButtonToggleComponent implements OnInit {
 
@@ -12,10 +20,13 @@ export class ButtonToggleComponent implements OnInit {
 
   readonly radioBtnName = `radioBtn_${Math.trunc(Math.random() * 100) + 1}`;
 
-  private _value: string | number;
+  onChange: Function = (_: any) => { };
 
-  @Output()
-  valueChange = new EventEmitter<string | number>();
+  onTouched: Function = () => { };
+
+  isDisabled: boolean;
+
+  private _value: string | number;
 
   @Input()
   get value(): string | number {
@@ -24,11 +35,32 @@ export class ButtonToggleComponent implements OnInit {
 
   set value(v: string | number) {
     this._value = v;
-    this.valueChange.emit(this._value);
+    this.onChange(this._value);
   }
 
   constructor() {}
 
   ngOnInit() { }
+
+  writeValue(value: string | number): void {
+    this.value = value;
+  }
+
+  registerOnChange(fn: any): void {
+    this.onChange = fn;
+  }
+
+  registerOnTouched(fn: any): void {
+    this.onTouched = fn;
+  }
+
+  setDisabledState(state: boolean) {
+    this.isDisabled = state;
+  }
+
+  onButtonChange(value: string | number) {
+    this.value = value;
+    this.onTouched();
+  }
 
 }

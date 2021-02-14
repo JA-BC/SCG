@@ -4,7 +4,7 @@
         <ion-chip color="primary" [attr.outline]="value !== (v?.value || v)">
             <strong>{{ v?.key || v }}</strong>
             <input type="radio" [name]="radioBtnName" [id]="radioBtnName+i" [value]="v?.value || v"
-                (change)="value = (v?.value || v);" class="ion-hide">
+                (change)="onButtonChange(v?.value || v);" class="ion-hide">
         </ion-chip>
     </label>
 </ng-container>

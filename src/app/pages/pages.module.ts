@@ -3,6 +3,9 @@ import { CommonModule } from '@angular/common';
 import { Routes, RouterModule } from '@angular/router';
 import { PagesComponent } from './pages.component';
 import { IonicModule } from '@ionic/angular';
+import { API_URL_TOKEN } from '@core/interfaces/type';
+import { environment } from '@env/environment';
+import { BalanceService } from '@providers/balance.service';
 
 const routes: Routes = [
     { path: '', redirectTo: 'balance', pathMatch: 'full' },
@@ -32,8 +35,8 @@ const routes: Routes = [
     // Routes without tabs here
     //
     {
-        path: 'form',
-        loadChildren: () => import('./form/form.module').then(m => m.FormModule)
+        path: 'balance-form',
+        loadChildren: () => import('./balance/form/form.module').then(m => m.BalanceFormModule)
     },
     {
         path: 'categoria-form',
@@ -51,6 +54,9 @@ const routes: Routes = [
         RouterModule.forChild(routes)
     ],
     exports: [],
-    providers: [],
+    providers: [
+        { provide: API_URL_TOKEN, useValue: environment.api },
+        BalanceService
+    ],
 })
 export class PagesModule { }

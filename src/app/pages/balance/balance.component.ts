@@ -1,33 +1,29 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { BaseList } from '@core/class/base-list';
+import { BalanceService } from '@providers/balance.service';
+import { IServicio } from 'src/app/models/servicio.model';
+import { CHART_OPTIONS } from './chats-options';
 
 @Component({
-    templateUrl: './balance.component.html'
+  templateUrl: './balance.component.html'
 })
-export class BalanceComponent implements OnInit {
+export class BalanceComponent extends BaseList<IServicio, BalanceService>
+ implements OnInit, OnDestroy {
 
-    items = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
-    chartOptions = {
-    series: [44, 55],
-    chart: {
-      // width: 300,
-      type: "donut"
-    },
-    labels: ["Ingresos", "Gastos"],
-    responsive: [
-      {
-        breakpoint: 576,
-        options: {
-          chart: {
-            width: 250
-          },
-          legend: {
-            position: "bottom"
-          }
-        }
-      }
-    ]
+  chartOptions = CHART_OPTIONS;
+
+  constructor(
+    public readonly service: BalanceService
+  ) {
+    super(service);
   }
-    constructor() { }
 
-    ngOnInit() { }
+  ngOnInit() {
+    super.ngOnInit();
+  }
+
+  ngOnDestroy() {
+    super.ngOnDestroy();
+  }
+
 }

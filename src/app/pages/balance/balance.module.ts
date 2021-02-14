@@ -4,6 +4,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { BalanceComponent } from './balance.component';
 import { NgApexchartsModule } from 'ng-apexcharts';
 import { IonicModule } from '@ionic/angular';
+import { CoreModule } from '@core/core.module';
 
 const routes: Routes = [
     {
@@ -17,6 +18,7 @@ const routes: Routes = [
     imports: [
         CommonModule,
         IonicModule,
+        CoreModule,
         NgApexchartsModule,
         RouterModule.forChild(routes)
     ],
