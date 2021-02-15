@@ -67,7 +67,7 @@ export class BaseList<TModel extends IEntity, TService extends APIService<TModel
     }
 
     gotoForm() {
-        this.router.navigate([`/app/${this.service.endpoint}-form`, this.service.model.id]);
+        this.router.navigate([`/app/${this.service.endpoint}-form`]);
     }
 
     ngOnDestroy() {

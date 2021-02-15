@@ -1,8 +1,9 @@
+import { IEntity } from "@core/interfaces/service.model";
 
-export interface ICategoria {
-    Nombre: string;
-    Color: string;
-    TipoCategoriaId: number;
+export interface ICategoria extends IEntity {
+    Nombre?: string;
+    TipoCategoriaId?: number;
+    TipoCategoriaDescripcion?: string;
 }
 
 export enum ETipoCategoria {

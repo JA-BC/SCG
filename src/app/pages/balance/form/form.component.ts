@@ -1,12 +1,12 @@
 import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { BaseForm } from '@core/class/base-form';
 import { BalanceService } from '@providers/balance.service';
-import { IServicio } from 'src/app/models/servicio.model';
+import { IBalance } from 'src/app/models/balance.model';
 
 @Component({
     templateUrl: './form.component.html'
 })
-export class BalanceFormComponent extends BaseForm<IServicio, BalanceService>
+export class BalanceFormComponent extends BaseForm<IBalance, BalanceService>
  implements OnInit, OnDestroy {
 
     constructor(

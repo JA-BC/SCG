@@ -1,9 +1,8 @@
-import { OnInit, ViewChild } from '@angular/core';
+import { ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
-import { EPushModel, EServiceState, IEntity } from '@core/interfaces/service.model';
+import { EPushModel, IEntity } from '@core/interfaces/service.model';
 import { AppInjector } from '@core/utils/injector';
-import { AlertController } from '@ionic/angular';
+import { ToastController } from '@ionic/angular';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { APIService } from './base.service';
@@ -11,8 +10,9 @@ import { APIService } from './base.service';
 export class BaseForm<TModel extends IEntity, TService extends APIService<TModel>> {
 
     private readonly destroy$ = new Subject<void>();
+    private readonly toast: ToastController = AppInjector.getInstance(ToastController);
 
-    @ViewChild('form', { static: true }) form: NgForm;
+    @ViewChild('form') form: NgForm;
 
     constructor(
         public readonly service: TService
@@ -48,7 +48,13 @@ export class BaseForm<TModel extends IEntity, TService extends APIService<TModel
 
     onUpdated(model?: TModel) {
         this.service.push(model, EPushModel.Replace);
-        this.clearForm();
+
+        this.toast.create({
+            message: "Registro actualizado",
+            duration: 2500,
+            position: 'bottom',
+            color: 'success'
+        }).then(toast => toast.present());
     }
 
     clearForm() {
@@ -63,13 +69,10 @@ export class BaseForm<TModel extends IEntity, TService extends APIService<TModel
         this.form.reset();
     }
 
-    cancel() {
-        
-    }
-
     ngOnDestroy() {
         this.destroy$.next();
         this.destroy$.complete();
+        this.service.cancel();
     }
 
 }

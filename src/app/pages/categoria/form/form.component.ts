@@ -1,10 +1,14 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { BaseForm } from '@core/class/base-form';
+import { CategoriaService } from '@providers/categoria.service';
+import { ICategoria } from 'src/app/models/categoria.model';
 
 @Component({
     selector: 'categoria-form',
     templateUrl: './form.component.html'
 })
-export class CategoriaFormComponent implements OnInit {
+export class CategoriaFormComponent extends BaseForm<ICategoria, CategoriaService>
+ implements OnInit, OnDestroy {
 
     tipoCategoria = [
         {
@@ -17,9 +21,17 @@ export class CategoriaFormComponent implements OnInit {
         }
     ];
 
-    model: any = {};
+    constructor(
+        public readonly service: CategoriaService
+    ) {
+        super(service);
+    }
 
-    constructor() { }
+    ngOnInit() {
+        super.ngOnInit();
+    }
 
-    ngOnInit() { }
+    ngOnDestroy() {
+        super.ngOnDestroy();
+    }
 }

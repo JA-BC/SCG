@@ -5,6 +5,7 @@ import { FormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
 import { BalanceFormComponent } from './form.component';
 import { CoreModule } from '@core/core.module';
+import { SharedModule } from '@shared/shared.module';
 
 const routes: Routes = [
     {
@@ -17,9 +18,7 @@ const routes: Routes = [
     declarations: [BalanceFormComponent],
     imports: [
         CommonModule,
-        IonicModule,
-        CoreModule,
-        FormsModule,
+        SharedModule,
         RouterModule.forChild(routes)
     ],
     exports: [],

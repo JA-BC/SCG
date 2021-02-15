@@ -7,6 +7,7 @@ import { ForgotPasswordComponent } from './forgot-password/forgot-password.compo
 import { FormsModule } from '@angular/forms';
 import { CoreModule } from '@core/core.module';
 import { IonicModule } from '@ionic/angular';
+import { SharedModule } from '@shared/shared.module';
 
 const routes: Routes = [
     { path: '', redirectTo: 'login', pathMatch: 'full' },
@@ -37,9 +38,7 @@ const routes: Routes = [
     ],
     imports: [
         CommonModule,
-        IonicModule,
-        FormsModule,
-        CoreModule,
+        SharedModule,
         RouterModule.forChild(routes)
     ],
     exports: [],

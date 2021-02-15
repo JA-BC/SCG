@@ -14,9 +14,9 @@ export abstract class BaseService<TModel> {
         public readonly endpoint: string
     ) { }
     
-    async getMethod(params?: { [key: string]: string }): Promise<any> {
+    async getMethod(apiMethod: string, params?: { [key: string]: string }): Promise<any> {
         const queryParams = params ? this.queryString(params) : '';
-        const url = `${this.API_URL}/${this.endpoint}/select${queryParams}`;
+        const url = `${this.API_URL}/${this.endpoint}/${apiMethod}${queryParams}`;
 
         return new Promise<any>((resolve, reject)=> {
             const req = this.sendRequest(EHttpMethod.GET, url).subscribe(
@@ -158,6 +158,19 @@ export class APIService<TModel extends IEntity> extends BaseService<TModel> {
             console.log("Service Update: ", item);
             const res = await this.putMethod(`update/${item.id}`, item);
             this.onUpdated.next(res as TModel);
+            this.onStateChange(EServiceState.Update);
+            return res as TModel;
+        } catch {
+            this.onStateChange(EServiceState.Update);
+        }
+    }
+
+    async requery(model?: TModel): Promise<TModel> {
+        try {
+            this.onStateChange(EServiceState.Load);
+            const item: TModel = Object.assign({}, this.model, model);
+            console.log("Service Requery: ", item);
+            const res = await this.getMethod(`selectId/${item.id}`);
             this.onStateChange(EServiceState.Browse);
             return res as TModel;
         } catch {
@@ -165,24 +178,10 @@ export class APIService<TModel extends IEntity> extends BaseService<TModel> {
         }
     }
 
-    async requery(model?: TModel): Promise<TModel> {
-        /* try { */
-        /*     this.onStateChange(EServiceState.Load); */
-        /*     const item: TModel = Object.assign({}, this.model, model); */
-        /*     console.log("Service Requery: ", item); */
-        /*     const res = await this.getMethod(`selectId/${item.id}`); */
-        /*     this.onStateChange(EServiceState.Browse); */
-        /*     return res as TModel; */
-        /* } catch { */
-        /*     this.onStateChange(EServiceState.Browse); */
-        /* } */
-        return {} as TModel;
-    }
-
     async load(params?: { [key: string]: string }) {
         try {
             this.onStateChange(EServiceState.Load);
-            const res = await this.getMethod(params);
+            const res = await this.getMethod('select', params);
             console.log('Service Load', res);
             this.data = res as TModel[];
             this.onLoaded.next(res as TModel[]);
@@ -205,6 +204,11 @@ export class APIService<TModel extends IEntity> extends BaseService<TModel> {
         } catch {
             this.onStateChange(EServiceState.Browse);
         }
+    }
+
+    cancel() {
+        this.model = {};
+        this.onStateChange(EServiceState.Browse);
     }
 
     // Keep current value and without modifications at shadowModel

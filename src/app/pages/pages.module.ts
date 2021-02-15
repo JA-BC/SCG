@@ -6,6 +6,8 @@ import { IonicModule } from '@ionic/angular';
 import { API_URL_TOKEN } from '@core/interfaces/type';
 import { environment } from '@env/environment';
 import { BalanceService } from '@providers/balance.service';
+import { CategoriaService } from '@providers/categoria.service';
+import { SharedModule } from '@shared/shared.module';
 
 const routes: Routes = [
     { path: '', redirectTo: 'balance', pathMatch: 'full' },
@@ -50,13 +52,10 @@ const routes: Routes = [
     ],
     imports: [
         CommonModule,
-        IonicModule,
+        SharedModule,
         RouterModule.forChild(routes)
     ],
     exports: [],
-    providers: [
-        { provide: API_URL_TOKEN, useValue: environment.api },
-        BalanceService
-    ],
+    providers: [],
 })
 export class PagesModule { }

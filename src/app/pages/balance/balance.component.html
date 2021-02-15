@@ -98,11 +98,11 @@
 
             <ng-container *ngFor="let s of service.data">
                 <ion-item detail="false">
-                    <ion-chip [color]="s.CategoriaColor">
+                    <ion-chip color="primary">
                         <span class="ion-font-bold">{{ s.Fecha | date:'dd' }}</span>
                     </ion-chip>
                     <ion-label class="ion-ml-3" color="dark">
-                        <h6 class="ion-font-bold ion-font-md">{{ s.CategoriaNombre }}</h6>
+                        <h6 class="ion-font-bold ion-font-md">{{ s.Descripcion }}</h6>
                         <ion-text color="medium">
                             <span class="ion-font-sm">{{ s.Costo | currency }}</span>
                         </ion-text>

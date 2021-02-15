@@ -2,6 +2,7 @@ import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
+import { SharedModule } from '@shared/shared.module';
 import { CategoriaComponent } from './categoria.component';
 
 const routes: Routes = [
@@ -16,7 +17,7 @@ const routes: Routes = [
     declarations: [CategoriaComponent],
     imports: [
         CommonModule,
-        IonicModule,
+        SharedModule,
         RouterModule.forChild(routes)
     ],
     exports: [],
