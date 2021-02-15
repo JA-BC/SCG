@@ -22,6 +22,60 @@ export class BalanceComponent extends BaseList<IBalance, BalanceService>
     super.ngOnInit();
   }
 
+  // override super.onLoaded()
+  onLoaded(data: IBalance[]) {
+    console.log('BalanceComponent Data Loaded');
+    this.chartOptions.series = [this.ingresoTotal, this.gastoTotal];
+  }
+
+  get balanceDiffer() {
+    return Math.max(this.ingresoTotal - this.gastoTotal, 0);
+  }
+
+  get ingresoTotal() {
+    if (this.service.data.length < 1) {
+        return;
+    }
+
+    const ingresos = this.service.data.filter(x => {
+      // 1 is equals to ingreso
+      return x.CategoriaTipoCategoriaId === 1
+    }) || [];
+
+    let total = 0;
+    ingresos.forEach(item => {
+        total += item?.Costo;
+    });
+
+    return total;
+  }
+
+  get gastoTotal() {
+    if (this.service.data.length < 1) {
+        return;
+    }
+
+    const gastos = this.service.data.filter(x => {
+      // 1 is equals to ingreso
+      return x.CategoriaTipoCategoriaId === 2
+    }) || [];
+
+    let total = 0;
+    gastos.forEach(item => {
+        total += item?.Costo;
+    });
+
+    return total;
+  }
+
+  get ingresoPercent() {
+    return (this.ingresoTotal / (this.ingresoTotal + this.gastoTotal)) * 100;
+  }
+
+  get gastoPercent() {
+    return (this.gastoTotal / (this.ingresoTotal + this.gastoTotal)) * 100;
+  }
+
   ngOnDestroy() {
     super.ngOnDestroy();
   }

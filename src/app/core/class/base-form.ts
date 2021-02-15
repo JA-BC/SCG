@@ -33,7 +33,7 @@ export class BaseForm<TModel extends IEntity, TService extends APIService<TModel
 
     async onUpdate(model?: TModel) {
         // Model hasn't changed
-        if (this.service.shadowModel === this.service.model) {
+        if (JSON.stringify(this.service.shadowModel) === JSON.stringify(this.service.model)) {
             return;
         }
 

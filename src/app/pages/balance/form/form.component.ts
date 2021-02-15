@@ -18,6 +18,11 @@ export class BalanceFormComponent extends BaseForm<IBalance, BalanceService>
     ngOnInit() {
         super.ngOnInit();
     }
+
+    setToday(prop: string) {
+        const date = new Date().toISOString().split('T')[0];
+        this.service.model[prop] = date;
+    }
     
     ngOnDestroy() {
         super.ngOnDestroy();

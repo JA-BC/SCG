@@ -20,7 +20,7 @@
 </ion-header>
 
 <ion-content fullscreen>
-    <div class="fade-animation">
+    <div class="fade-animation" *ngIf="!service.loading; else spinner">
         <br>
         <ion-grid class="ion-px-2">
             <ion-row class="ion-justify-content-between">
@@ -29,10 +29,10 @@
                         <ion-text color="medium">
                             <span class="ion-font-sm">Restante</span>
                         </ion-text>
-                        <h1 class="ion-font-bold">$200.000</h1>
+                        <h1 class="ion-font-bold">{{ balanceDiffer | currency }}</h1>
                         <ion-text color="secondary">
                             <small class="ion font-xs">
-                                Adipisicing possimus omnis quo?
+                                Balance de Cuenta
                             </small>
                         </ion-text>
                     </ion-label>
@@ -49,13 +49,13 @@
                 </ion-col>
                 <ion-col size="6" class="ion-text-center ion-ml-auto">
                     <ion-label color="dark">
-                        <h6 class="ion-font-bold">Lorem accusamus</h6>
+                        <h6 class="ion-font-bold">¡Hecha un Vistazo!</h6>
                         <ion-text color="medium">
-                            <p class="ion-font-sm">Sit nisi velit vero tempora</p>
+                            <p class="ion-font-sm">Categorias</p>
                         </ion-text>
                     </ion-label>
                     <ion-button color="primary" shape="round" size="small" class="ion-mt-4">
-                        Increase&nbsp;
+                        Ver todo&nbsp;
                         <ion-icon name="chevron-forward"></ion-icon>
                     </ion-button>
                 </ion-col>
@@ -64,22 +64,22 @@
             <ion-row>
                 <ion-col size="6" class="ion-text-center">
                     <ion-label>
-                        <h2 class="ion-font-bold">$200.000</h2>
+                        <h2 class="ion-font-bold">{{ ingresoTotal | currency }}</h2>
                         <ion-text color="medium">
                             <span class="ion-font-sm">Ingresos</span>
                             <ion-chip class="ion-round ion-h-auto ion-p-1" color="success">
-                                <small>30.76%</small>
+                                <small>{{ ingresoPercent | number:'2.2-2' }}%</small>
                             </ion-chip>
                         </ion-text>
                     </ion-label>
                 </ion-col>
                 <ion-col size="6" class="ion-text-center">
                     <ion-label>
-                        <h2 class="ion-font-bold">$200.000</h2>
+                        <h2 class="ion-font-bold">{{ gastoTotal | currency }}</h2>
                         <ion-text color="medium">
                             <span class="ion-font-sm">Gastos</span>
                             <ion-chip class="ion-round ion-h-auto ion-p-1" color="danger">
-                                <small>-30.76%</small>
+                                <small>-{{ gastoPercent | number:'2.2-2' }}%</small>
                             </ion-chip>
                         </ion-text>
                     </ion-label>
@@ -107,8 +107,8 @@
                             <span class="ion-font-sm">{{ s.Costo | currency }}</span>
                         </ion-text>
                     </ion-label>
-                    <ion-icon [name]="s.CategoriaId === 1 ? 'chevron-up' : 'chevron-down'"
-                        [color]="s.CategoriaId === 1 ? 'success' : 'danger'"
+                    <ion-icon [name]="s.CategoriaTipoCategoriaId === 1 ? 'chevron-up' : 'chevron-down'"
+                        [color]="s.CategoriaTipoCategoriaId === 1 ? 'success' : 'danger'"
                         slot="end">
                     </ion-icon>
                 </ion-item>
@@ -117,4 +117,15 @@
         </ion-list>
 
     </div>
+
+     <!-- Spinner -->
+    <ng-template #spinner>
+        <br>
+        <ion-row class="ion-justify-content-center">
+            <ion-col size="auto">
+                <ion-spinner color="secondary"></ion-spinner>
+            </ion-col>
+        </ion-row>
+    </ng-template>
+   
 </ion-content>

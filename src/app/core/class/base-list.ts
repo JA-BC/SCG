@@ -23,7 +23,7 @@ export class BaseList<TModel extends IEntity, TService extends APIService<TModel
             .subscribe((model: TModel) => this.onDeleted(model));
 
         this.service.onLoaded.pipe(takeUntil(this.destroy$))
-            .subscribe(() => this.onLoaded());
+            .subscribe((data: TModel[]) => this.onLoaded(data));
     }
 
     onAdd() {
@@ -62,7 +62,7 @@ export class BaseList<TModel extends IEntity, TService extends APIService<TModel
         this.service.data.splice(index, 1);
     }
 
-    onLoaded() {
+    onLoaded(data: TModel[]) {
         console.log('LOADED');
     }
 

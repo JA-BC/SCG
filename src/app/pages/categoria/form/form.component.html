@@ -37,7 +37,7 @@
             <ion-row class="ion-justify-content-center">
                 <ion-col size="8" sizeMd="6">
                     <ion-button type="submit" color="primary" expand="block"
-                        [disabled]="form?.invalid || form?.pristine">
+                        [disabled]="(form?.invalid || form?.pristine)">
                         {{ service.editing ? 'Editar' : 'Guardar' }}
                     </ion-button>
                 </ion-col>

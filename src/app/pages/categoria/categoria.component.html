@@ -12,7 +12,7 @@
 </ion-header>
 
 <ion-content>
-    <div class="fade-animation">
+    <div class="fade-animation" *ngIf="!service.loading; else spinner">
         <ion-segment color="primary" [(ngModel)]="filter.value">
                 <ion-segment-button value="1">
                     <ion-label class="ion-text-capitalize">
@@ -54,4 +54,15 @@
         </ion-list>
 
     </div>
+
+     <!-- Spinner -->
+    <ng-template #spinner>
+        <br>
+        <ion-row class="ion-justify-content-center">
+            <ion-col size="auto">
+                <ion-spinner color="secondary"></ion-spinner>
+            </ion-col>
+        </ion-row>
+    </ng-template>
+
 </ion-content>

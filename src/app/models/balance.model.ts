@@ -5,6 +5,7 @@ export interface IBalance extends IEntity {
     Costo?: number;
     CategoriaId?: number;
     CategoriaNombre: string;
+    CategoriaTipoCategoriaId: number;
     CategoriaColor?: string;
     Fecha?: string;
 }
