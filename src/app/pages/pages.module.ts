@@ -41,6 +41,10 @@ const routes: Routes = [
         loadChildren: () => import('./balance/form/form.module').then(m => m.BalanceFormModule)
     },
     {
+        path: 'balance-detalle',
+        loadChildren: () => import('./balance/detalle/detalle.module').then(m => m.DetalleModule)
+    },
+    {
         path: 'categoria-form',
         loadChildren: () => import('./categoria/form/form.module').then(m => m.CategoriaFormModule)
     }

@@ -28,13 +28,18 @@ export class BalanceComponent extends BaseList<IBalance, BalanceService>
     this.chartOptions.series = [this.ingresoTotal, this.gastoTotal];
   }
 
+  onItemClick(model: IBalance) {
+    this.service.model = model;
+    this.router.navigate(['/app/balance-detalle']);
+  }
+
   get balanceDiffer() {
     return Math.max(this.ingresoTotal - this.gastoTotal, 0);
   }
 
   get ingresoTotal() {
     if (this.service.data.length < 1) {
-        return;
+      return;
     }
 
     const ingresos = this.service.data.filter(x => {
@@ -44,7 +49,7 @@ export class BalanceComponent extends BaseList<IBalance, BalanceService>
 
     let total = 0;
     ingresos.forEach(item => {
-        total += item?.Costo;
+      total += item?.Costo;
     });
 
     return total;
@@ -52,17 +57,17 @@ export class BalanceComponent extends BaseList<IBalance, BalanceService>
 
   get gastoTotal() {
     if (this.service.data.length < 1) {
-        return;
+      return;
     }
 
     const gastos = this.service.data.filter(x => {
-      // 1 is equals to ingreso
+      // 1 is equals to gasto
       return x.CategoriaTipoCategoriaId === 2
     }) || [];
 
     let total = 0;
     gastos.forEach(item => {
-        total += item?.Costo;
+      total += item?.Costo;
     });
 
     return total;

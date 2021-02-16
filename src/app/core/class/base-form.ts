@@ -10,7 +10,7 @@ import { APIService } from './base.service';
 export class BaseForm<TModel extends IEntity, TService extends APIService<TModel>> {
 
     private readonly destroy$ = new Subject<void>();
-    private readonly toast: ToastController = AppInjector.getInstance(ToastController);
+    protected readonly toast: ToastController = AppInjector.getInstance(ToastController);
 
     @ViewChild('form') form: NgForm;
 

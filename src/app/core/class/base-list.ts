@@ -9,8 +9,8 @@ import { APIService } from "./base.service";
 export class BaseList<TModel extends IEntity, TService extends APIService<TModel>> {
     
     private readonly destroy$ = new Subject<void>();
-    private readonly router: Router = AppInjector.getInstance(Router);
-    private readonly alert: AlertController = AppInjector.getInstance(AlertController);
+    protected readonly router: Router = AppInjector.getInstance(Router);
+    protected readonly alert: AlertController = AppInjector.getInstance(AlertController);
 
     constructor(
         public readonly service: TService
@@ -54,7 +54,7 @@ export class BaseList<TModel extends IEntity, TService extends APIService<TModel
             ]
         });
 
-        await alert.present();
+        return await alert.present();
     }
 
     onDeleted(model?: TModel) {
