@@ -37,7 +37,7 @@
         </ion-row>
         
         <ion-list class="ion-py-2" lines="none">
-            <ion-item *ngFor="let c of service.data | filter:filter">
+            <ion-item *ngFor="let c of service.data | filter:filter" detail="false">
                 <!-- <ion-badge [color]="c.Color" class="ion-round ion-round-circle ion-block ion-p-2"></ion-badge> -->
                 <ion-label color="dark" class="ion-ml-3">
                     <span class="ion-font-md">{{ c.Nombre }}</span>

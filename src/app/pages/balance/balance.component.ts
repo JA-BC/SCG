@@ -39,7 +39,7 @@ export class BalanceComponent extends BaseList<IBalance, BalanceService>
 
   get ingresoTotal() {
     if (this.service.data.length < 1) {
-      return;
+      return 0;
     }
 
     const ingresos = this.service.data.filter(x => {
@@ -57,7 +57,7 @@ export class BalanceComponent extends BaseList<IBalance, BalanceService>
 
   get gastoTotal() {
     if (this.service.data.length < 1) {
-      return;
+      return 0;
     }
 
     const gastos = this.service.data.filter(x => {

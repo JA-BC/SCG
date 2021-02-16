@@ -1,5 +1,5 @@
 export const CHART_OPTIONS = {
-    series: [44, 55],
+    series: [50, 50],
     chart: {
         // width: 300,
         type: "donut"

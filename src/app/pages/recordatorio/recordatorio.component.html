@@ -12,5 +12,47 @@
 </ion-header>
 
 <ion-content>
+    <div class="fade-animation" *ngIf="!service.loading; else spinner">
+        <br>
+        <ion-row>
+            <ion-col size="12">
+                <ion-button color="medium" expand="block" fill="outline" routerLink="/app/recordatorio-form"
+                    style="--border-width: 1px; --border-style: dashed;">
+                     <ion-icon name="add"></ion-icon>
+                        Agregar tipo ingreso
+                </ion-button>
+            </ion-col>
+        </ion-row>
     
+        <ion-list class="ion-py-2" lines="none">
+            <ion-item *ngFor="let r of service.data" detail="false">
+                <ion-label color="dark" class="ion-ml-3">
+                    <h6 class="ion-font-md">{{ r.CategoriaNombre }}</h6>
+                    <ion-text color="medium">
+                        <span class="ion-font-sm">
+                            Cada {{ r.RecordarCada }} del mes
+                        </span>
+                    </ion-text>
+                </ion-label>
+                <ion-buttons slot="end">
+                    <ion-button color="tertiary" shape="round" (click)="onUpdate(r)">
+                        <ion-icon name="pencil-outline"></ion-icon>
+                    </ion-button>
+                    <ion-button color="danger" shape="round" (click)="onDelete(r)">
+                        <ion-icon name="trash-outline"></ion-icon>
+                    </ion-button>
+                </ion-buttons>
+            </ion-item>
+        </ion-list>
+    </div>
+
+    <!-- Spinner -->
+    <ng-template #spinner>
+        <br>
+        <ion-row class="ion-justify-content-center">
+            <ion-col size="auto">
+                <ion-spinner color="secondary"></ion-spinner>
+            </ion-col>
+        </ion-row>
+    </ng-template>
 </ion-content>
