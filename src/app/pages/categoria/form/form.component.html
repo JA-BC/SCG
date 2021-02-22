@@ -11,7 +11,7 @@
 
 <ion-content>
     <ion-grid class="ion-padding" [hidden]="service.loading">
-        <form #form="ngForm" (ngSubmit)="!service.editing ? onAdd(this.service.model) : onUpdate(this.service.model)">
+        <form #form="ngForm">
              <ion-row>
                 <ion-col size="12" sizeMd="6">
                     <ion-input-wrapper [ctrl]="name" label="Nombre">
@@ -36,8 +36,8 @@
             <br>
             <ion-row class="ion-justify-content-center">
                 <ion-col size="8" sizeMd="6">
-                    <ion-button type="submit" color="primary" expand="block"
-                        [disabled]="(form?.invalid || form?.pristine)">
+                    <ion-button type="submit" color="primary" expand="block" [disabled]="(form?.invalid || form?.pristine)"
+                        (click)="!service.editing ? onAdd(this.service.model) : onUpdate(this.service.model)">
                         {{ service.editing ? 'Editar' : 'Guardar' }}
                     </ion-button>
                 </ion-col>

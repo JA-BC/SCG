@@ -14,5 +14,9 @@ export const VALIDATIONS: { [key: string]: Partial<Validation> } = {
         minLength: (length: number) => `Minimo ${length} caracteres`,
         required: 'Este campo debe ser valido',
         pattern: 'Debe contener al menos 1 mayuscula o numero'
+    },
+    costo: {
+        required: 'Este campo es obligatorio',
+        pattern: 'No se admiten numeros menores que 0 o decimales'
     }
 };

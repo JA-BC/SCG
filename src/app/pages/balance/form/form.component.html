@@ -11,13 +11,14 @@
 
 <ion-content>
     <ion-grid class="ion-padding" [hidden]="service.loading || categoriaService.loading">
-        <form #form="ngForm" (ngSubmit)="!service.editing ? onAdd(this.service.model) : onUpdate(this.service.model)">
+        <form #form="ngForm">
     
              <ion-row>
                 <ion-col size="12" sizeMd="6">
                     <ion-input-wrapper [ctrl]="costo" label="Costo">
                         <ion-input type="number" class="ion-input-custom" placeholder="$0.00" #costo="ngModel"
-                            [(ngModel)]="service.model.Costo" name="costo" min="1" required>
+                            [(ngModel)]="service.model.Costo" name="costo" min="1" inputMode="numeric"
+                            [pattern]="PATTERNS.onlyPositive" required>
                         </ion-input>
                     </ion-input-wrapper>
                 </ion-col>
@@ -49,25 +50,22 @@
                 </ion-col>
             </ion-row>
    
-            <ion-row class="ion-align-items-center">
-                <ion-col size="9" sizeMd="6">
-                    <ion-input-wrapper [ctrl]="fecha" label="Fecha">
-                        <ion-input type="date" class="ion-input-custom" placeholder="$0.00" #fecha="ngModel"
-                            [(ngModel)]="service.model.Fecha" name="fecha" required>
-                        </ion-input>
-                    </ion-input-wrapper>
-                </ion-col>
-                <ion-col size="3">
-                    <ion-button color="primary" expand="block" class="ion-mb-n4" (click)="setToday('Fecha')">
-                        Hoy
-                    </ion-button>
+            <ion-row>
+                <ion-col size="12" sizeMd="6">
+                    <ion-label color="medium">
+                        <h6 class="ion-font-sm ion-my-2">Fecha</h6>
+                    </ion-label>
+                    <ion-datetime class="ion-datetime-custom" placeholder="DD/MM/YYYY" displayFormat="DD/MMM/YYYY" cancelText="Cancelar"
+                        doneText="Aceptar" monthShortNames="Ene, Feb, Mar, Abr, May, Jun, Jul, Ago, Sep, Oct, Nov, Dic"
+                        name="fecha" [(ngModel)]="service.model.Fecha" required>
+                    </ion-datetime>
                 </ion-col>
             </ion-row>
             <br>
             <ion-row class="ion-justify-content-center">
                 <ion-col size="8" sizeMd="6">
-                    <ion-button type="submit" color="primary" expand="block"
-                        [disabled]="form?.invalid || form?.pristine">
+                    <ion-button type="submit" color="primary" expand="block" [disabled]="form?.invalid || form?.pristine"
+                        (click)="!service.editing ? onAdd(this.service.model) : onUpdate(this.service.model)">
                         {{ service.editing ? 'Editar' : 'Guardar' }}
                     </ion-button>
                 </ion-col>

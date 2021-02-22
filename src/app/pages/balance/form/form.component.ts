@@ -5,6 +5,7 @@ import { BalanceService } from '@providers/balance.service';
 import { CategoriaService } from '@providers/categoria.service';
 import { IBalance } from 'src/app/models/balance.model';
 import { ICategoria } from 'src/app/models/categoria.model';
+import { INPUT_PATTERNS } from '@core/constants/index';
 
 @Component({
     templateUrl: './form.component.html',
@@ -13,6 +14,7 @@ import { ICategoria } from 'src/app/models/categoria.model';
 export class BalanceFormComponent extends BaseForm<IBalance, BalanceService>
  implements OnInit, OnDestroy {
 
+    readonly PATTERNS = INPUT_PATTERNS;
     categorias: ICategoria[] = [];
 
     constructor(
