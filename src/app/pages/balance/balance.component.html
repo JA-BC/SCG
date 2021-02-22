@@ -97,7 +97,13 @@
             </ion-list-header>
 
             <ng-container *ngFor="let s of service.data">
-                <ion-item detail="false" (click)="onItemClick(s)">
+                <ion-item-sliding>
+                    <ion-item-options side="end">
+                        <ion-item-option color="danger" expandable (click)="onDelete(s)">
+                            <ion-icon name="trash-outline" slot="icon-only"></ion-icon>
+                        </ion-item-option>
+                 </ion-item-options>
+                <ion-item detail="false">
                     <ion-chip color="primary">
                         <span class="ion-font-bold">{{ s.Fecha | date:'dd' }}</span>
                     </ion-chip>
@@ -112,6 +118,8 @@
                         slot="end">
                     </ion-icon>
                 </ion-item>
+
+                </ion-item-sliding>
             </ng-container>
 
         </ion-list>

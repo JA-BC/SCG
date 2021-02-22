@@ -1,5 +1,5 @@
 import { Router } from "@angular/router";
-import { EServiceState, IEntity } from "@core/interfaces/service.model";
+import { EPushModel, EServiceState, HttpRequest, IEntity } from "@core/interfaces/service.model";
 import { AppInjector } from "@core/utils/injector";
 import { AlertController } from "@ionic/angular";
 import { Subject } from "rxjs";
@@ -57,9 +57,19 @@ export class BaseList<TModel extends IEntity, TService extends APIService<TModel
         return await alert.present();
     }
 
+    onLoad() {
+        this.service.requestOptions.Pagination.Page++;
+        this.service.load();
+    }
+
+    onRefresh() {
+        // Instance to initial value
+        this.service.requestOptions = new HttpRequest();
+        this.service.load();
+    }
+
     onDeleted(model?: TModel) {
-        const index = this.service.data.findIndex(x => x.id === model.id);
-        this.service.data.splice(index, 1);
+        this.service.push(model, EPushModel.SoftDelete);
     }
 
     onLoaded(data: TModel[]) {

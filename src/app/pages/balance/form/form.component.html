@@ -10,7 +10,7 @@
 </ion-header>
 
 <ion-content>
-    <ion-grid class="ion-padding" [hidden]="service.loading">
+    <ion-grid class="ion-padding" [hidden]="service.loading || categoriaService.loading">
         <form #form="ngForm" (ngSubmit)="!service.editing ? onAdd(this.service.model) : onUpdate(this.service.model)">
     
              <ion-row>
@@ -30,8 +30,11 @@
                     </ion-label>
                     <ion-select class="ion-select-custom" placeholder="Categoria" name="categoriaId"
                         [(ngModel)]="service.model.CategoriaId" required>
-                        <ion-select-option value="1">Sueldo</ion-select-option>
-                        <ion-select-option value="2">Gasto de Venta</ion-select-option>
+                        <ng-container *ngFor="let c of categorias">
+                            <ion-select-option [value]="c.Id">
+                                {{ c.Nombre }}
+                            </ion-select-option>
+                        </ng-container>
                     </ion-select>
                 </ion-col>
             </ion-row>
@@ -73,7 +76,7 @@
     </ion-grid>
 
     <!-- Spinner -->
-    <ng-template [ngIf]="service.loading">
+    <ng-template [ngIf]="service.loading || categoriaService.loading">
         <br>
         <ion-row class="ion-justify-content-center">
             <ion-col size="auto">

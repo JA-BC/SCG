@@ -5,7 +5,7 @@ export class ActionEvent<T> {
 }
 
 export interface IEntity {
-  id: number;
+  Id: number;
 }
 
 export enum EServiceState {
@@ -25,6 +25,7 @@ export enum EHttpMethod {
 export enum EPushModel {
   Insert,
   Replace,
+  SoftDelete,
   Append
 }
 
@@ -34,7 +35,7 @@ export class Pagination {
     TotalCount: number;
 
     constructor(limit?: number, total?: number, page?: number) {
-        this.Limit = limit;
+        this.Limit = limit || 4;
         this.Page = page || 1;
         this.TotalCount = total || 0;
     }
@@ -79,12 +80,12 @@ export enum ESortOperator {
   Descendent
 }
 
-export class OperationResponse<TModel> {
+export class HttpResponse<TModel> {
   Data: TModel[];
   TotalCount: number;
 }
 
-export class OperationRequest {
+export class HttpRequest {
   Pagination = new Pagination();
   Filters: Filter[] = [];
   Sorts: SortFilter[] = [];

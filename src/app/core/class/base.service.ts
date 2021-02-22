@@ -1,5 +1,5 @@
 import { HttpClient, HttpHeaders } from "@angular/common/http";
-import { EHttpMethod, IEntity, EServiceState, EPushModel } from "@core/interfaces/service.model";
+import { EHttpMethod, IEntity, EServiceState, EPushModel, HttpRequest, HttpResponse } from "@core/interfaces/service.model";
 import { API_URL_TOKEN } from "@core/interfaces/type";
 import { AppInjector } from "@core/utils/injector";
 import { throwError, Subject } from "rxjs";
@@ -43,34 +43,33 @@ export abstract class BaseService<TModel> {
         })
     }
 
-    putMethod(apiMethod: string, body: TModel | any): Promise<any> {
-        const url = `${this.API_URL}/${this.endpoint}/${apiMethod}`;
+    // putMethod(apiMethod: string, body: TModel | any): Promise<any> {
+    //     const url = `${this.API_URL}/${this.endpoint}/${apiMethod}`;
 
-        return new Promise<any>((resolve, reject) => {
-            const req = this.sendRequest(EHttpMethod.PUT, url, body).subscribe(
-                (result: any) => {
-                    resolve(result);
-                    req.unsubscribe();
-                },
-                error => reject(error)
-            );
-        })
-    }
+    //     return new Promise<any>((resolve, reject) => {
+    //         const req = this.sendRequest(EHttpMethod.PUT, url, body).subscribe(
+    //             (result: any) => {
+    //                 resolve(result);
+    //                 req.unsubscribe();
+    //             },
+    //             error => reject(error)
+    //         );
+    //     })
+    // }
 
-    deleteMethod(apiMethod: string, body: TModel | any): Promise<any> {
-        const url = `${this.API_URL}/${this.endpoint}/${apiMethod}`;
+    // deleteMethod(apiMethod: string, body: TModel | any): Promise<any> {
+    //     const url = `${this.API_URL}/${this.endpoint}/${apiMethod}`;
 
-        return new Promise<any>((resolve, reject) => {
-            const req = this.sendRequest(EHttpMethod.DELETE, url, body).subscribe(
-                (result: any) => {
-                    resolve(result);
-                    req.unsubscribe();
-                },
-                error => reject(error)
-            );
-        })
-    }
-
+    //     return new Promise<any>((resolve, reject) => {
+    //         const req = this.sendRequest(EHttpMethod.DELETE, url, body).subscribe(
+    //             (result: any) => {
+    //                 resolve(result);
+    //                 req.unsubscribe();
+    //             },
+    //             error => reject(error)
+    //         );
+    //     })
+    // }
 
     queryString(data: { [key: string]: string }): string{
         let queryString: string = '';
@@ -132,6 +131,9 @@ export class APIService<TModel extends IEntity> extends BaseService<TModel> {
     shadowModel: TModel;
     model: TModel | any = { };
     data = new Array<TModel>();
+    cacheData: object[];
+
+    requestOptions = new HttpRequest();
 
     constructor(endpoint: string) {
         super(endpoint);
@@ -156,7 +158,7 @@ export class APIService<TModel extends IEntity> extends BaseService<TModel> {
             this.onStateChange(EServiceState.Load);
             const item: TModel = Object.assign({}, this.model, model);
             console.log("Service Update: ", item);
-            const res = await this.putMethod(`update/${item.id}`, item);
+            const res = await this.postMethod(`update`, item);
             this.onUpdated.next(res as TModel);
             this.onStateChange(EServiceState.Update);
             return res as TModel;
@@ -170,7 +172,7 @@ export class APIService<TModel extends IEntity> extends BaseService<TModel> {
             this.onStateChange(EServiceState.Load);
             const item: TModel = Object.assign({}, this.model, model);
             console.log("Service Requery: ", item);
-            const res = await this.getMethod(`selectId/${item.id}`);
+            const res = await this.postMethod(`requery`, item);
             this.onStateChange(EServiceState.Browse);
             return res as TModel;
         } catch {
@@ -178,15 +180,17 @@ export class APIService<TModel extends IEntity> extends BaseService<TModel> {
         }
     }
 
-    async load(params?: { [key: string]: string }) {
+    async load(options?: HttpRequest) {
         try {
             this.onStateChange(EServiceState.Load);
-            const res = await this.getMethod('select', params);
+            const config = Object.assign({}, this.requestOptions, options);
+            const res = await this.postMethod('select', config) as HttpResponse<TModel>;
             console.log('Service Load', res);
-            this.data = res as TModel[];
-            this.onLoaded.next(res as TModel[]);
+            this.data = this.data.concat(res.Data);
+            this.requestOptions.Pagination.TotalCount = res.TotalCount;
+            this.onLoaded.next(res.Data);
             this.onStateChange(EServiceState.Browse);
-            return res as TModel[];
+            return res;
         } catch {
             this.onStateChange(EServiceState.Browse);
         }
@@ -197,7 +201,7 @@ export class APIService<TModel extends IEntity> extends BaseService<TModel> {
             this.onStateChange(EServiceState.Load);
             const item: TModel = Object.assign({}, this.model, model);
             console.log("Service Delete: ", item);
-            const res = await this.deleteMethod(`delete/${item.id}`, item);
+            const res = await this.postMethod(`delete`, item);
             this.onDeleted.next(res as TModel);
             this.onStateChange(EServiceState.Browse);
             return res as TModel;
@@ -230,14 +234,20 @@ export class APIService<TModel extends IEntity> extends BaseService<TModel> {
     }
 
     push(model: TModel, mode: EPushModel) {
+        const index = this.data.findIndex(x => x.Id === model.Id);
+
         switch(mode) {
             case EPushModel.Insert:
                 this.data.unshift(model);
                 break;
 
             case EPushModel.Replace:
-                const index = this.data.findIndex(x => x.id === model.id);
                 this.data.splice(index, 1, model);
+                break;
+
+            case EPushModel.SoftDelete:
+                this.data.splice(index, 1);
+                this.requestOptions.Pagination.TotalCount--;
                 break;
 
             case EPushModel.Append:
