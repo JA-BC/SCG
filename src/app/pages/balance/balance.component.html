@@ -95,33 +95,31 @@
                     </h6>
                 </ion-label>
             </ion-list-header>
-
-            <ng-container *ngFor="let s of service.data">
-                <ion-item-sliding>
+            
+            <ion-virtual-scroll [items]="service.data">
+                <ion-item-sliding *virtualItem="let b">
                     <ion-item-options side="end">
-                        <ion-item-option color="danger" expandable (click)="onDelete(s)">
+                        <ion-item-option color="danger" expandable (click)="onDelete(b)">
                             <ion-icon name="trash-outline" slot="icon-only"></ion-icon>
                         </ion-item-option>
-                 </ion-item-options>
-                <ion-item detail="false">
-                    <ion-chip color="primary">
-                        <span class="ion-font-bold">{{ s.Fecha | date:'dd' }}</span>
-                    </ion-chip>
-                    <ion-label class="ion-ml-3" color="dark">
-                        <h6 class="ion-font-bold ion-font-md">{{ s.CategoriaNombre }}</h6>
-                        <ion-text color="medium">
-                            <span class="ion-font-sm">{{ s.Costo | currency }}</span>
-                        </ion-text>
-                    </ion-label>
-                    <ion-icon [name]="s.CategoriaTipoCategoriaId === 1 ? 'chevron-up' : 'chevron-down'"
-                        [color]="s.CategoriaTipoCategoriaId === 1 ? 'success' : 'danger'"
-                        slot="end">
-                    </ion-icon>
-                </ion-item>
-
+                    </ion-item-options>
+                    <ion-item detail="false">
+                        <ion-chip color="primary">
+                            <span class="ion-font-bold">{{ b.Fecha | date:'dd' }}</span>
+                        </ion-chip>
+                        <ion-label class="ion-ml-3" color="dark">
+                            <h6 class="ion-font-bold ion-font-md">{{ b.CategoriaNombre }}</h6>
+                            <ion-text color="medium">
+                                <span class="ion-font-sm">{{ b.Costo | currency }}</span>
+                            </ion-text>
+                        </ion-label>
+                        <ion-icon [name]="b.CategoriaTipoCategoriaId === 1 ? 'chevron-up' : 'chevron-down'"
+                            [color]="b.CategoriaTipoCategoriaId === 1 ? 'success' : 'danger'"
+                            slot="end">
+                        </ion-icon>
+                    </ion-item>
                 </ion-item-sliding>
-            </ng-container>
-
+            </ion-virtual-scroll>
         </ion-list>
 
     </div>

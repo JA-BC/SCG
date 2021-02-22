@@ -57,9 +57,16 @@ export class BaseList<TModel extends IEntity, TService extends APIService<TModel
         return await alert.present();
     }
 
-    onLoad() {
+    onLoad(e: any) {
+        // When all data is loaded, dont make more requests to load
+        if (this.service.requestOptions.Pagination.TotalCount
+            === this.service.data.length) {
+            e.target.disabled = true;
+            return;
+        }
+
         this.service.requestOptions.Pagination.Page++;
-        this.service.load();
+        this.service.load().then(() => e.target.complete());
     }
 
     onRefresh() {

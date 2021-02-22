@@ -35,7 +35,7 @@ export class Pagination {
     TotalCount: number;
 
     constructor(limit?: number, total?: number, page?: number) {
-        this.Limit = limit || 4;
+        this.Limit = limit || 100;
         this.Page = page || 1;
         this.TotalCount = total || 0;
     }

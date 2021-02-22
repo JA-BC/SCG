@@ -4,7 +4,7 @@
             <h6 class="ion-font-bold ion-m-0 ion-font-md">Categories</h6>
             <ion-text color="medium">
                 <small class="ion-font-sm">
-                    Dolor ut consectetur illum.
+                    Ingresos y Gastos
                 </small>
             </ion-text>
         </ion-title>
@@ -13,19 +13,6 @@
 
 <ion-content>
     <div class="fade-animation" *ngIf="!service.loading; else spinner">
-        <ion-segment color="primary" [(ngModel)]="filter.value">
-                <ion-segment-button value="1">
-                    <ion-label class="ion-text-capitalize">
-                        <span class="ion-font-md">Ingresos</span>
-                    </ion-label>
-                </ion-segment-button>
-                <ion-segment-button value="2">
-                    <ion-label class="ion-text-capitalize">
-                        <span class="ion-font-md">Gastos</span>
-                    </ion-label>
-                </ion-segment-button>
-        </ion-segment>
-        <br>
         <ion-row>
             <ion-col size="12">
                 <ion-button color="medium" expand="block" fill="outline" routerLink="/app/categoria-form"
@@ -37,10 +24,13 @@
         </ion-row>
         
         <ion-list class="ion-py-2" lines="none">
-            <ion-item *ngFor="let c of service.data | filter:filter" detail="false">
-                <!-- <ion-badge [color]="c.Color" class="ion-round ion-round-circle ion-block ion-p-2"></ion-badge> -->
+            <ion-virtual-scroll [items]="service.data">
+              <ion-item *virtualItem="let c" detail="false">
                 <ion-label color="dark" class="ion-ml-3">
-                    <span class="ion-font-md">{{ c.Nombre }}</span>
+                    <h6 class="ion-font-md">{{ c.Nombre }}</h6>
+                    <ion-text color="medium">
+                        <span class="ion-font-sm">{{ c.TipoCategoriaDescripcion }}</span>
+                    </ion-text>
                 </ion-label>
                 <ion-buttons slot="end">
                     <ion-button color="tertiary" shape="round" (click)="onUpdate(c)">
@@ -50,7 +40,8 @@
                         <ion-icon name="trash-outline"></ion-icon>
                     </ion-button>
                 </ion-buttons>
-            </ion-item>
+               </ion-item>
+            </ion-virtual-scroll>
         </ion-list>
 
     </div>
