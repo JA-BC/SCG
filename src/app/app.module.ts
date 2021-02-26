@@ -9,10 +9,13 @@ import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import { SharedModule } from '@shared/shared.module';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { ThemeService } from '@core/services/theme.service';
 import { BalanceService } from '@providers/balance.service';
 import { CategoriaService } from '@providers/categoria.service';
+import { AuthErrorInterceptor, JWTAuthInterceptor } from '@core/services/http-interceptor';
+import { AuthService } from '@core/services/auth.service';
+import { TokenService } from '@core/services/token.service';
 
 @NgModule({
   declarations: [AppComponent],
@@ -29,7 +32,19 @@ import { CategoriaService } from '@providers/categoria.service';
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
     ThemeService,
     BalanceService,
-    CategoriaService
+    CategoriaService,
+    AuthService,
+    TokenService,
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: JWTAuthInterceptor,
+      multi: true
+    },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AuthErrorInterceptor,
+      multi: true
+    }
   ],
   bootstrap: [AppComponent]
 })

@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { ModalController } from '@ionic/angular';
+import { IUser } from '@core/interfaces/auth.model';
+import { AuthService } from '@core/services/auth.service';
 
 @Component({
     selector: 'app-forgot-password',
@@ -7,7 +8,11 @@ import { ModalController } from '@ionic/angular';
 })
 export class ForgotPasswordComponent implements OnInit {
 
-    constructor(public modal: ModalController) { }
+    model: IUser = { };
+
+    constructor(
+        public readonly service: AuthService
+    ) { }
 
     ngOnInit(): void { }
 }

@@ -1,5 +1,5 @@
 import { HttpClient, HttpHeaders } from "@angular/common/http";
-import { EHttpMethod, IEntity, EServiceState, EPushModel, HttpRequest, HttpResponse } from "@core/interfaces/service.model";
+import { EHttpMethod, IEntity, EServiceState, EPushModel, APIRequest, APIResponse } from "@core/interfaces/service.model";
 import { API_URL_TOKEN } from "@core/interfaces/type";
 import { AppInjector } from "@core/utils/injector";
 import { throwError, Subject } from "rxjs";
@@ -87,7 +87,8 @@ export abstract class BaseService<TModel> {
 
     sendRequest(method: EHttpMethod, url: string, body?: TModel | any) {
         const headers = new HttpHeaders();
-        headers.append('Content-type', 'application/json');
+        headers.append('Content-Type', 'application/json');
+        /* headers.append('Access-Control-Allow-Origin', '*'); */
 
         return this.http.request(method, url, {
             headers,
@@ -133,7 +134,7 @@ export class APIService<TModel extends IEntity> extends BaseService<TModel> {
     data = new Array<TModel>();
     cacheData: object[];
 
-    requestOptions = new HttpRequest();
+    requestOptions = new APIRequest();
 
     constructor(endpoint: string) {
         super(endpoint);
@@ -180,14 +181,14 @@ export class APIService<TModel extends IEntity> extends BaseService<TModel> {
         }
     }
 
-    async load(options?: HttpRequest) {
+    async load(options?: APIRequest) {
         try {
             this.onStateChange(EServiceState.Load);
             const config = Object.assign({}, this.requestOptions, options);
-            const res = await this.postMethod('select', config) as HttpResponse<TModel>;
+            const res = await this.postMethod('select', config) as APIResponse<TModel>;
             console.log('Service Load', res);
-            this.data = this.data.concat(res.Data);
-            this.requestOptions.Pagination.TotalCount = res.TotalCount;
+            this.data = res.Data;
+            this.requestOptions.Pagination.TotalCount = res?.TotalCount;
             this.onLoaded.next(res.Data);
             this.onStateChange(EServiceState.Browse);
             return res;

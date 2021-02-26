@@ -10,7 +10,7 @@ import { CHART_OPTIONS } from './chats-options';
 export class BalanceComponent extends BaseList<IBalance, BalanceService>
  implements OnInit, OnDestroy {
 
-  chartOptions = CHART_OPTIONS;
+  readonly chartOptions = CHART_OPTIONS;
 
   constructor(
     public readonly service: BalanceService
@@ -26,11 +26,6 @@ export class BalanceComponent extends BaseList<IBalance, BalanceService>
   onLoaded(data: IBalance[]) {
     console.log('BalanceComponent Data Loaded');
     this.chartOptions.series = [this.ingresoTotal, this.gastoTotal];
-  }
-
-  onItemClick(model: IBalance) {
-    this.service.model = model;
-    this.router.navigate(['/app/balance-detalle']);
   }
 
   get balanceDiffer() {

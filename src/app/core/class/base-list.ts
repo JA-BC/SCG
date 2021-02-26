@@ -1,5 +1,5 @@
 import { Router } from "@angular/router";
-import { EPushModel, EServiceState, HttpRequest, IEntity } from "@core/interfaces/service.model";
+import { EPushModel, EServiceState, APIRequest, IEntity } from "@core/interfaces/service.model";
 import { AppInjector } from "@core/utils/injector";
 import { AlertController } from "@ionic/angular";
 import { Subject } from "rxjs";
@@ -57,6 +57,7 @@ export class BaseList<TModel extends IEntity, TService extends APIService<TModel
         return await alert.present();
     }
 
+    // Infinite Scroll
     onLoad(e: any) {
         // When all data is loaded, dont make more requests to load
         if (this.service.requestOptions.Pagination.TotalCount
@@ -65,13 +66,13 @@ export class BaseList<TModel extends IEntity, TService extends APIService<TModel
             return;
         }
 
-        this.service.requestOptions.Pagination.Page++;
+        ++this.service.requestOptions.Pagination.Page;
         this.service.load().then(() => e.target.complete());
     }
 
     onRefresh() {
         // Instance to initial value
-        this.service.requestOptions = new HttpRequest();
+        this.service.requestOptions = new APIRequest();
         this.service.load();
     }
 

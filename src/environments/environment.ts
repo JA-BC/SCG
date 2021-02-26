@@ -4,7 +4,8 @@
 
 export const environment = {
   production: false,
-  api: 'http://localhost:5000/api',
+  // api: 'http://localhost:53520/api' // VS
+  api: 'http://localhost:5000/api' // dotnet
 };
 
 /*

@@ -80,12 +80,12 @@ export enum ESortOperator {
   Descendent
 }
 
-export class HttpResponse<TModel> {
+export class APIResponse<TModel> {
   Data: TModel[];
   TotalCount: number;
 }
 
-export class HttpRequest {
+export class APIRequest {
   Pagination = new Pagination();
   Filters: Filter[] = [];
   Sorts: SortFilter[] = [];

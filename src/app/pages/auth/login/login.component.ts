@@ -1,7 +1,7 @@
-import { Component, OnInit } from '@angular/core';
-import { ModalController } from '@ionic/angular';
-import { ForgotPasswordComponent } from '../forgot-password/forgot-password.component';
-import { RegisterComponent } from '../register/register.component';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { NgForm } from '@angular/forms';
+import { IUser } from '@core/interfaces/auth.model';
+import { AuthService } from '@core/services/auth.service';
 
 @Component({
     selector: 'app-login',
@@ -9,24 +9,15 @@ import { RegisterComponent } from '../register/register.component';
 })
 export class LoginComponent implements OnInit {
 
-    constructor(public modal: ModalController) { }
+    @ViewChild('form', { static: true }) form: NgForm;
+    model: IUser = { };
 
-    ngOnInit(): void { }
+    constructor(
+        public readonly service: AuthService
+    ) { }
 
-    async presentRegister() {
-        const modal = await this.modal.create({
-            component: RegisterComponent
-        });
-
-        await modal.present();
-    }
-
-    async presentForgotPassword() {
-        const modal = await this.modal.create({
-            component: ForgotPasswordComponent
-        });
-
-        return await modal.present();
+    ngOnInit(): void {
+        this.service.form = this.form;
     }
 
 }
