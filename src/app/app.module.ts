@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { ErrorHandler, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouteReuseStrategy } from '@angular/router';
 
@@ -16,6 +16,7 @@ import { CategoriaService } from '@providers/categoria.service';
 import { AuthErrorInterceptor, JWTAuthInterceptor } from '@core/services/http-interceptor';
 import { AuthService } from '@core/services/auth.service';
 import { TokenService } from '@core/services/token.service';
+import { ErrorService } from '@core/services/error.service';
 
 @NgModule({
   declarations: [AppComponent],
@@ -44,7 +45,9 @@ import { TokenService } from '@core/services/token.service';
       provide: HTTP_INTERCEPTORS,
       useClass: AuthErrorInterceptor,
       multi: true
-    }
+    },
+    { provide: ErrorService, useClass: ErrorService },
+    { provide: ErrorHandler, useClass: ErrorService },
   ],
   bootstrap: [AppComponent]
 })

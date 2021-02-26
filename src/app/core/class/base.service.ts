@@ -1,6 +1,7 @@
 import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { EHttpMethod, IEntity, EServiceState, EPushModel, APIRequest, APIResponse } from "@core/interfaces/service.model";
 import { API_URL_TOKEN } from "@core/interfaces/type";
+import { ErrorService } from "@core/services/error.service";
 import { AppInjector } from "@core/utils/injector";
 import { throwError, Subject } from "rxjs";
 import { catchError } from "rxjs/operators";
@@ -9,6 +10,7 @@ export abstract class BaseService<TModel> {
 
     private readonly API_URL = AppInjector.getInstance(API_URL_TOKEN);
     private readonly http = AppInjector.getInstance(HttpClient);
+    private readonly errorService = AppInjector.getInstance(ErrorService);
 
     constructor(
         public readonly endpoint: string
@@ -88,22 +90,17 @@ export abstract class BaseService<TModel> {
     sendRequest(method: EHttpMethod, url: string, body?: TModel | any) {
         const headers = new HttpHeaders();
         headers.append('Content-Type', 'application/json');
-        /* headers.append('Access-Control-Allow-Origin', '*'); */
 
         return this.http.request(method, url, {
             headers,
             body
         })
         .pipe(
-            catchError((error: Response) => {
-                this.handlerError(error);
+            catchError(error => {
+                this.errorService.handleError(error);
                 return throwError(error);
             })
         );
-    }
-
-    handlerError(error: Response) {
-        console.error(error);
     }
 
 }
