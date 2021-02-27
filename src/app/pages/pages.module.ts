@@ -56,7 +56,7 @@ const routes: Routes = [
     ],
     imports: [
         CommonModule,
-        SharedModule,
+        IonicModule,
         RouterModule.forChild(routes)
     ],
     exports: [],

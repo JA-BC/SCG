@@ -42,8 +42,7 @@ export class ErrorService implements ErrorHandler {
         }
 
         this.run({
-            message: `${error.error}`,
-            duration: 2500
+            message: `${error.error}`
         });
 
         console.error(error);
@@ -51,7 +50,10 @@ export class ErrorService implements ErrorHandler {
 
     private run(opts: ToastOptions) {
         this.ngZone.run(async () => {
-            const toast = await this.toast.create(Object.assign({}, opts, { color: 'danger' }));
+            const toast = await this.toast.create(Object.assign({}, opts, {
+                color: 'danger',
+                duration: 2500
+            }));
             await toast.present();
         });
     }

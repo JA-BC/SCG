@@ -1,6 +1,6 @@
 import { Router } from "@angular/router";
 import { EPushModel, EServiceState, APIRequest, IEntity } from "@core/interfaces/service.model";
-import { AppInjector } from "@core/utils/injector";
+import { AppInjector } from "@core/helpers/injector";
 import { AlertController } from "@ionic/angular";
 import { Subject } from "rxjs";
 import { takeUntil } from "rxjs/operators";
@@ -82,6 +82,10 @@ export class BaseList<TModel extends IEntity, TService extends APIService<TModel
 
     onLoaded(data: TModel[]) {
         console.log('LOADED');
+    }
+
+    trackByFn(index: number, item: TModel): number {
+      return index || item.Id;
     }
 
     gotoForm() {

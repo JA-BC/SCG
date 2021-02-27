@@ -2,6 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { IUser } from '@core/interfaces/auth.model';
 import { AuthService } from '@core/services/auth.service';
+import { clearForm } from '@core/utils/functions';
 
 @Component({
     selector: 'app-login',
@@ -16,8 +17,10 @@ export class LoginComponent implements OnInit {
         public readonly service: AuthService
     ) { }
 
-    ngOnInit(): void {
-        this.service.form = this.form;
+    ngOnInit(): void { }
+
+    ionViewDidLeave() {
+        clearForm(this.form);
     }
 
 }

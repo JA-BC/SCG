@@ -18,7 +18,7 @@ const routes: Routes = [
     declarations: [BalanceComponent],
     imports: [
         CommonModule,
-        SharedModule,
+        IonicModule,
         NgApexchartsModule,
         RouterModule.forChild(routes)
     ],

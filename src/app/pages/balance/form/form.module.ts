@@ -18,7 +18,9 @@ const routes: Routes = [
     declarations: [BalanceFormComponent],
     imports: [
         CommonModule,
-        SharedModule,
+        IonicModule,
+        FormsModule,
+        CoreModule,
         RouterModule.forChild(routes)
     ],
     exports: [],

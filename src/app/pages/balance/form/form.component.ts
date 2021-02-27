@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { BaseForm } from '@core/class/base-form';
-import { StorageService } from '@core/services/storage.service';
+import { StorageService } from '@core/helpers/storage.service';
 import { BalanceService } from '@providers/balance.service';
 import { CategoriaService } from '@providers/categoria.service';
 import { IBalance } from 'src/app/models/balance.model';

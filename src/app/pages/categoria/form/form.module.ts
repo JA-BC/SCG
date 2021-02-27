@@ -18,7 +18,9 @@ const routes: Routes = [
     declarations: [CategoriaFormComponent],
     imports: [
         CommonModule,
-        SharedModule,
+        IonicModule,
+        FormsModule,
+        CoreModule,
         RouterModule.forChild(routes)
     ],
     exports: [],

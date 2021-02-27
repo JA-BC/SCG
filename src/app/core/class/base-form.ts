@@ -1,11 +1,12 @@
 import { ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { EPushModel, IEntity } from '@core/interfaces/service.model';
-import { AppInjector } from '@core/utils/injector';
+import { AppInjector } from '@core/helpers/injector';
 import { ToastController } from '@ionic/angular';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { APIService } from './base.service';
+import { clearForm } from '@core/utils/functions';
 
 export class BaseForm<TModel extends IEntity, TService extends APIService<TModel>> {
 
@@ -43,7 +44,7 @@ export class BaseForm<TModel extends IEntity, TService extends APIService<TModel
 
     onAdded(model?: TModel) {
         this.service.push(model, EPushModel.Insert);
-        this.clearForm();
+        clearForm(this.form);
     }
 
     onUpdated(model?: TModel) {
@@ -57,22 +58,10 @@ export class BaseForm<TModel extends IEntity, TService extends APIService<TModel
         }).then(toast => toast.present());
     }
 
-    clearForm() {
-        for (const control in this.form.controls) {
-            if (this.form.controls.hasOwnProperty(control)) {
-                this.form.controls[control].reset();
-                this.form.controls[control].setErrors(null);
-                this.form.controls[control].markAsUntouched();
-            }
-        }
-
-        this.form.reset();
-    }
-
     ngOnDestroy() {
         this.destroy$.next();
         this.destroy$.complete();
-        this.service.cancel();
+        clearForm(this.form);
     }
 
 }

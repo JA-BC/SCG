@@ -88,8 +88,8 @@
                 </ion-label>
             </ion-list-header>
             
-            <ion-virtual-scroll [items]="service.data">
-                <ion-item-sliding *virtualItem="let b">
+            <ng-container *ngFor="let b of service.data; trackBy: trackByFn">
+                <ion-item-sliding>
                     <ion-item-options side="end">
                         <ion-item-option color="danger" expandable (click)="onDelete(b)">
                             <ion-icon name="trash-outline" slot="icon-only"></ion-icon>
@@ -111,7 +111,7 @@
                         </ion-icon>
                     </ion-item>
                 </ion-item-sliding>
-            </ion-virtual-scroll>
+            </ng-container>
         </ion-list>
 
     </div>

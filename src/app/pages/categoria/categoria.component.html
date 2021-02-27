@@ -17,15 +17,14 @@
             <ion-col size="12">
                 <ion-button color="medium" expand="block" fill="outline" routerLink="/app/categoria-form"
                     style="--border-width: 1px; --border-style: dashed;">
-                     <ion-icon name="add"></ion-icon>
-                        Agregar tipo ingreso
+                    <ion-icon name="add"></ion-icon>
+                    Agregar tipo ingreso
                 </ion-button>
             </ion-col>
         </ion-row>
-        
+
         <ion-list class="ion-py-2" lines="none">
-            <ion-virtual-scroll [items]="service.data">
-              <ion-item *virtualItem="let c" detail="false">
+            <ion-item *ngFor="let c of service.data; trackBy: trackByFn" detail="false">
                 <ion-label color="dark" class="ion-ml-3">
                     <h6 class="ion-font-md">{{ c.Nombre }}</h6>
                     <ion-text color="medium">
@@ -40,13 +39,12 @@
                         <ion-icon name="trash-outline"></ion-icon>
                     </ion-button>
                 </ion-buttons>
-               </ion-item>
-            </ion-virtual-scroll>
+            </ion-item>
         </ion-list>
 
     </div>
 
-     <!-- Spinner -->
+    <!-- Spinner -->
     <ng-template #spinner>
         <br>
         <ion-row class="ion-justify-content-center">

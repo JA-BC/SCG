@@ -17,7 +17,8 @@ const routes: Routes = [
     declarations: [AjusteComponent],
     imports: [
         CommonModule,
-        SharedModule,
+        IonicModule,
+        FormsModule,
         RouterModule.forChild(routes)
     ],
     exports: [],

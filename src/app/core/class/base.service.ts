@@ -1,16 +1,16 @@
 import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { EHttpMethod, IEntity, EServiceState, EPushModel, APIRequest, APIResponse } from "@core/interfaces/service.model";
 import { API_URL_TOKEN } from "@core/interfaces/type";
-import { ErrorService } from "@core/services/error.service";
-import { AppInjector } from "@core/utils/injector";
+import { AppInjector } from "@core/helpers/injector";
 import { throwError, Subject } from "rxjs";
 import { catchError } from "rxjs/operators";
+import { ErrorHandler } from "@angular/core";
 
 export abstract class BaseService<TModel> {
 
     private readonly API_URL = AppInjector.getInstance(API_URL_TOKEN);
     private readonly http = AppInjector.getInstance(HttpClient);
-    private readonly errorService = AppInjector.getInstance(ErrorService);
+    private readonly errorService = AppInjector.getInstance(ErrorHandler);
 
     constructor(
         public readonly endpoint: string
@@ -206,11 +206,6 @@ export class APIService<TModel extends IEntity> extends BaseService<TModel> {
         } catch {
             this.onStateChange(EServiceState.Browse);
         }
-    }
-
-    cancel() {
-        this.model = {};
-        this.onStateChange(EServiceState.Browse);
     }
 
     // Keep current value and without modifications at shadowModel

@@ -1,16 +1,17 @@
 import { Injectable } from '@angular/core';
 import { IToken } from '@core/interfaces/auth.model';
 import { parseJwt } from '../utils/functions';
-import { StorageService } from './storage.service';
+import { StorageService } from '../helpers/storage.service';
 
 @Injectable({ providedIn: 'root' })
 export class TokenService {
+    private readonly storage = new StorageService();
 
     readonly TOKEN_NAME = 'token';
     readonly HEADER_PREFIX = 'Bearer';
     readonly HEADER_TYPE = 'Authorization';
 
-    constructor(private readonly storage: StorageService) { }
+    constructor() { }
 
     async getToken(): Promise<string> {
         const token = await this.storage.get(this.TOKEN_NAME) as string;

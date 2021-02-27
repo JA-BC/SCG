@@ -16,7 +16,7 @@ const routes: Routes = [
     declarations: [RecordatorioComponent],
     imports: [
         CommonModule,
-        SharedModule,
+        IonicModule,
         RouterModule.forChild(routes)
     ],
     exports: [],

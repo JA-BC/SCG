@@ -22,7 +22,6 @@ export class AuthService extends BaseService<IUser> {
   }
 
   model: IUser = { };
-  form: NgForm;
 
   constructor(
     private readonly tokenService: TokenService,
@@ -39,7 +38,6 @@ export class AuthService extends BaseService<IUser> {
       const res = await this.postMethod('login', item);
       await this.tokenService.setToken(res?.Token);
       this.router.navigate(['/app']);
-      this.form?.reset();
       this.onStateChange(EServiceState.Browse);
     } catch {
       this.onStateChange(EServiceState.Browse);
@@ -59,7 +57,6 @@ export class AuthService extends BaseService<IUser> {
 
       await toast.present();
       this.router.navigate(['/auth']);
-      this.form?.reset();
       this.onStateChange(EServiceState.Browse);
     } catch {
       this.onStateChange(EServiceState.Browse);
