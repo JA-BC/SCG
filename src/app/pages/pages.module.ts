@@ -45,8 +45,8 @@ const routes: Routes = [
         loadChildren: () => import('./categoria/form/form.module').then(m => m.CategoriaFormModule)
     },
     {
-        path: 'recordatorio-form',
-        loadChildren: () => import('./recordatorio/form/form.module').then(m => m.RecordatorioFormModule)
+        path: 'perfil',
+        loadChildren: () => import('./perfil/perfil.module').then(m => m.PerfilModule)
     }
 ];
 

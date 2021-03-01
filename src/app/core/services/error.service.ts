@@ -25,9 +25,9 @@ export class ErrorService implements ErrorHandler {
     }
 
     private reportError(error: Error) {
-        this.run({
-            message: 'Ha ocurrido un error inesperado',
-        });
+        /* this.run({ */
+        /*     message: 'Ha ocurrido un error inesperado', */
+        /* }); */
 
         console.error(error);
     }

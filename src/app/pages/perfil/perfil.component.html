@@ -1,0 +1,54 @@
+<ion-header class="ion-no-border">
+    <ion-toolbar>
+        <ion-buttons slot="start">
+            <ion-back-button icon="chevron-back" defaultHref="/app/ajuste"></ion-back-button>
+        </ion-buttons>
+        <ion-title class="ion-font-lg ion-no-padding">
+            Perfil
+        </ion-title>
+    </ion-toolbar>
+</ion-header>
+
+<ion-content>
+    <ion-grid class="ion-padding-horizontal" *ngIf="claims; else spinner">
+        <ion-row class="ion-margin-vertical">
+            <ion-col>
+                <app-img-thumbnail (upload)="onUpload($event)" (error)="onUploadError($event)"
+                    [loading]="uploadService.loading" [imageUrl]="thumbnail ? uploadService.resources+thumbnail : null">
+                </app-img-thumbnail>
+            </ion-col>
+        </ion-row>
+
+        <form #form="ngForm">
+            <ion-row>
+                <ion-col size="12">
+                    <ion-input-wrapper label="Nombre de Usuario">
+                        <ion-input class="ion-input-custom" readonly [(ngModel)]="claims.unique_name" name="username">
+                        </ion-input>
+                    </ion-input-wrapper>
+                </ion-col>
+            </ion-row>
+
+            <ion-row>
+                <ion-col size="12">
+                    <ion-input-wrapper label="Correo Electronico">
+                        <ion-input class="ion-input-custom" readonly [(ngModel)]="claims.email" name="email">
+                        </ion-input>
+                    </ion-input-wrapper>
+                </ion-col>
+            </ion-row>
+        </form>
+    </ion-grid>
+
+    <!-- Spinner -->
+    <ng-template #spinner>
+        <br>
+        <ion-row class="ion-justify-content-center">
+            <ion-col size="auto">
+                <ion-spinner color="secondary"></ion-spinner>
+            </ion-col>
+        </ion-row>
+    </ng-template>
+
+</ion-content>
+

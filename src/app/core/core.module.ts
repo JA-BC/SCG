@@ -5,12 +5,14 @@ import { IonicModule } from '@ionic/angular';
 import { ButtonToggleComponent } from './components/button-toggle/button-toggle.component';
 import { InputWrapperComponent } from './components/input-wrapper/input-wrapper.component';
 import { SearchbarComponent } from './components/searchbar/searchbar.component';
+import { ImgThumbnailComponent } from './components/img-thumbnail/img-thumbnail.component';
 
 @NgModule({
     declarations: [
         InputWrapperComponent,
         ButtonToggleComponent,
-        SearchbarComponent
+        SearchbarComponent,
+        ImgThumbnailComponent
     ],
     imports: [
         CommonModule,
@@ -20,7 +22,8 @@ import { SearchbarComponent } from './components/searchbar/searchbar.component';
     exports: [
         InputWrapperComponent,
         ButtonToggleComponent,
-        SearchbarComponent
+        SearchbarComponent,
+        ImgThumbnailComponent
     ],
     providers: [],
 })

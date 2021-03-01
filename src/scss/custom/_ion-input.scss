@@ -24,6 +24,17 @@ ion-item.item-input.has-error ion-input {
     --placeholder-color: var(--ion-color-danger-tint);
 }
 
+ion-item.item-input.item-has-focus {
+    ion-label {
+        color: var(--ion-color-medium) !important;
+    }
+}
+
+ion-input[readonly] {
+    --background: transparent;
+    cursor: default;
+}
+
 .ion-select-custom {
     background: var(--ion-color-light);
     border-radius: 4px;

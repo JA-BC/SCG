@@ -7,6 +7,7 @@ import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { APIService } from './base.service';
 import { clearForm } from '@core/utils/functions';
+import { EServiceState } from '@core/interfaces/service.model';
 
 export class BaseForm<TModel extends IEntity, TService extends APIService<TModel>> {
 
@@ -62,6 +63,8 @@ export class BaseForm<TModel extends IEntity, TService extends APIService<TModel
         this.destroy$.next();
         this.destroy$.complete();
         clearForm(this.form);
+        // if state is equal to update, change it
+        this.service.onStateChange(EServiceState.Browse);
     }
 
 }

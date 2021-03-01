@@ -1,0 +1,27 @@
+
+<label for="upload_image" class="ion-relative ion-round-circle ion-m-auto ion-block"
+    [ngStyle]="{'width': dimension[0]+'px', 'height': dimension[1]+'px' }">
+
+    <!-- Thumbnail -->
+    <ion-avatar class="ion-w-100 ion-h-100" [class.ion-border]="!imageUrl">
+        <ion-img [src]="imageUrl" *ngIf="imageUrl; else icon"></ion-img>
+
+        <div class="ion-absolute ion-top-0 ion-left-0 ion-flex ion-align-items-center ion-justify-content-center ion-w-100 ion-h-100 ion-round"
+            style="z-index: 100; background-color: rgba(255, 255, 255, .6);" *ngIf="loading">
+            <ion-spinner color="primary"></ion-spinner>
+        </div>
+
+        <ng-template #icon>
+            <ion-icon name="person-outline" style="font-size: 48px; margin: 16px 20px"></ion-icon>
+        </ng-template>
+    </ion-avatar>
+    
+    <!-- Camera Icon -->
+    <div class="ion-absolute ion-bottom-0 ion-right-0 ion-p-1 ion-border ion-border-primary ion-round"
+        style="background-color: #fff;">
+        <ion-icon name="camera-outline" color="primary" class="ion-font-lg ion-mb-n1"></ion-icon>
+    </div>
+</label>
+
+<input type="file" id="upload_image" (change)="onUpload($event.target)" class="ion-hide" accept="image/*" [disabled]="loading">
+
