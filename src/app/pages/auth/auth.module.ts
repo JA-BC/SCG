@@ -3,7 +3,6 @@ import { CommonModule } from '@angular/common';
 import { Routes, RouterModule } from '@angular/router';
 import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
-import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
 import { FormsModule } from '@angular/forms';
 import { CoreModule } from '@core/core.module';
 import { IonicModule } from '@ionic/angular';
@@ -21,10 +20,6 @@ const routes: Routes = [
             {
                 path: 'register',
                 component: RegisterComponent
-            },
-            {
-                path: 'forgot',
-                component: ForgotPasswordComponent
             }
         ]
     }
@@ -33,8 +28,7 @@ const routes: Routes = [
 @NgModule({
     declarations: [
         LoginComponent,
-        RegisterComponent,
-        ForgotPasswordComponent
+        RegisterComponent
     ],
     imports: [
         CommonModule,

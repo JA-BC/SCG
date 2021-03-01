@@ -47,6 +47,10 @@ const routes: Routes = [
     {
         path: 'perfil',
         loadChildren: () => import('./perfil/perfil.module').then(m => m.PerfilModule)
+    },
+    {
+        path: 'change-password',
+        loadChildren: () => import('./change-password/change-password.module').then(m => m.ChangePasswordModule)
     }
 ];
 

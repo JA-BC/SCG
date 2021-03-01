@@ -63,8 +63,27 @@ export class AuthService extends BaseService<IUser> {
     }
   }
 
-  async forgotPassword(model?: IUser) {
-    throw new Error("Method not implemented.");
+  async changePassword(model?: IUser) {
+    try {
+      this.onStateChange(EServiceState.Load);
+      const item = Object.assign(this.model, model);
+      const res = await this.postMethod('changePassword', item);
+      await this.tokenService.removeToken();
+      await this.tokenService.setToken(res?.Token);
+
+      const toast = await this.toast.create({
+        message: 'Operacion satisfactoria',
+        duration: 2500
+      });
+
+      await toast.present();
+      this.router.navigate(['/app/ajuste']);
+      this.onStateChange(EServiceState.Browse);
+      return res;
+    } catch {
+      this.onStateChange(EServiceState.Browse);
+    }
+
   }
 
   onStateChange(state: EServiceState) {
