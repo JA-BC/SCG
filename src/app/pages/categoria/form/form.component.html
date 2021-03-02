@@ -12,7 +12,7 @@
 <ion-content>
     <ion-grid class="ion-padding" [hidden]="service.loading">
         <form #form="ngForm">
-             <ion-row>
+             <ion-row class="ion-justify-content-center">
                 <ion-col size="12" sizeMd="6">
                     <ion-input-wrapper [ctrl]="name" label="Nombre">
                         <ion-input class="ion-input-custom" placeholder="Sueldo, Mensualidad, etc..." #name="ngModel"
@@ -22,8 +22,8 @@
                 </ion-col>
             </ion-row>
 
-            <ion-row>
-                <ion-col size="12">
+            <ion-row class="ion-justify-content-center">
+                <ion-col size="12" sizeMd="6">
                     <ion-label color="medium">
                         <h6 class="ion-font-sm ion-my-2">Tipo de Servicio</h6>
                     </ion-label>
@@ -35,7 +35,7 @@
             
             <br>
             <ion-row class="ion-justify-content-center">
-                <ion-col size="8" sizeMd="6">
+                <ion-col size="8" sizeMd="4">
                     <ion-button type="submit" color="primary" expand="block" [disabled]="(form?.invalid || form?.pristine)"
                         (click)="!service.editing ? onAdd(this.service.model) : onUpdate(this.service.model)">
                         {{ service.editing ? 'Editar' : 'Guardar' }}

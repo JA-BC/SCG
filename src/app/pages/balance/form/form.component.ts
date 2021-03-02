@@ -35,8 +35,8 @@ export class BalanceFormComponent extends BaseForm<IBalance, BalanceService>
     }
 
     async fillCategorias() {
-        const { Data } = await this.categoriaService.load();
-        this.categorias = Data;
+        const res = await this.categoriaService.load();
+        this.categorias = res;
     }
     
     ngOnDestroy() {

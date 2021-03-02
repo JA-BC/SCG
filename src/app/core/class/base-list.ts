@@ -58,30 +58,24 @@ export class BaseList<TModel extends IEntity, TService extends APIService<TModel
     }
 
     // Infinite Scroll
-    onLoad(e: any) {
-        // When all data is loaded, dont make more requests to load
-        if (this.service.requestOptions.Pagination.TotalCount
-            === this.service.data.length) {
-            e.target.disabled = true;
-            return;
-        }
+    // onLoad(e: any) {
+    //     When all data is loaded, dont make more requests to load
+    //     if (this.service.requestOptions.Pagination.TotalCount
+    //          === this.service.data.length) {
+    //          e.target.disabled = true;
+    //          return;
+    //     }
 
-        ++this.service.requestOptions.Pagination.Page;
-        this.service.load().then(() => e.target.complete());
-    }
-
-    onRefresh() {
-        // Instance to initial value
-        this.service.requestOptions = new APIRequest();
-        this.service.load();
-    }
+    //     ++this.service.requestOptions.Pagination.Page;
+    //     this.service.load().then(() => e.target.complete());
+    // }
 
     onDeleted(model?: TModel) {
         this.service.push(model, EPushModel.SoftDelete);
     }
 
     onLoaded(data: TModel[]) {
-        console.log('LOADED');
+        // Do something when data is loaded
     }
 
     trackByFn(index: number, item: TModel): number {

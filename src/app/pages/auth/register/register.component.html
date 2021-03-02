@@ -12,14 +12,14 @@
 
     <ion-grid class="ion-padding-horizontal">
 
-        <ion-row>
+        <ion-row class="ion-justify-content-center">
             <ion-col>
-                <ion-label>
+                <ion-label class="ion-text-center">
                     <h1 class="ion-font-bold ion-mb-3">Registrarse</h1>
                     <ion-text color="medium">
-                        <small>
+                        <h6 class="ion-font-sm">
                             Unete ahora para controlar el flujo de tus gastos e ingresos.
-                        </small>
+                        </h6>
                     </ion-text>
                 </ion-label>
             </ion-col>
@@ -57,7 +57,7 @@
             </ion-row>    
             <br> 
             <ion-row>
-                <ion-col size="8" class="ion-m-auto">
+                <ion-col size="8" sizeMd="4" class="ion-m-auto">
                     <ion-button expand="block" (click)="service.register(model)"
                         [disabled]="form.invalid || form.pristine || service.loading">
                         <ion-text class="ion-text-capitalize">

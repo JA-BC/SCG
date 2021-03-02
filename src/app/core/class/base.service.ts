@@ -45,33 +45,33 @@ export abstract class BaseService<TModel> {
         })
     }
 
-    // putMethod(apiMethod: string, body: TModel | any): Promise<any> {
-    //     const url = `${this.API_URL}/${this.endpoint}/${apiMethod}`;
+    putMethod(apiMethod: string, body: TModel | any): Promise<any> {
+        const url = `${this.API_URL}/${this.endpoint}/${apiMethod}`;
 
-    //     return new Promise<any>((resolve, reject) => {
-    //         const req = this.sendRequest(EHttpMethod.PUT, url, body).subscribe(
-    //             (result: any) => {
-    //                 resolve(result);
-    //                 req.unsubscribe();
-    //             },
-    //             error => reject(error)
-    //         );
-    //     })
-    // }
+        return new Promise<any>((resolve, reject) => {
+            const req = this.sendRequest(EHttpMethod.PUT, url, body).subscribe(
+                (result: any) => {
+                    resolve(result);
+                    req.unsubscribe();
+                },
+                error => reject(error)
+            );
+        })
+    }
 
-    // deleteMethod(apiMethod: string, body: TModel | any): Promise<any> {
-    //     const url = `${this.API_URL}/${this.endpoint}/${apiMethod}`;
+    deleteMethod(apiMethod: string, body: TModel | any): Promise<any> {
+        const url = `${this.API_URL}/${this.endpoint}/${apiMethod}`;
 
-    //     return new Promise<any>((resolve, reject) => {
-    //         const req = this.sendRequest(EHttpMethod.DELETE, url, body).subscribe(
-    //             (result: any) => {
-    //                 resolve(result);
-    //                 req.unsubscribe();
-    //             },
-    //             error => reject(error)
-    //         );
-    //     })
-    // }
+        return new Promise<any>((resolve, reject) => {
+            const req = this.sendRequest(EHttpMethod.DELETE, url, body).subscribe(
+                (result: any) => {
+                    resolve(result);
+                    req.unsubscribe();
+                },
+                error => reject(error)
+            );
+        })
+    }
 
     queryString(data: { [key: string]: string }): string{
         let queryString: string = '';
@@ -129,9 +129,6 @@ export class APIService<TModel extends IEntity> extends BaseService<TModel> {
     shadowModel: TModel;
     model: TModel | any = { };
     data = new Array<TModel>();
-    cacheData: object[];
-
-    requestOptions = new APIRequest();
 
     constructor(endpoint: string) {
         super(endpoint);
@@ -178,15 +175,13 @@ export class APIService<TModel extends IEntity> extends BaseService<TModel> {
         }
     }
 
-    async load(options?: APIRequest) {
+    async load(options?: { [key: string]: string }) {
         try {
             this.onStateChange(EServiceState.Load);
-            const config = Object.assign({}, this.requestOptions, options);
-            const res = await this.postMethod('select', config) as APIResponse<TModel>;
+            const res = await this.getMethod('select', options);
             console.log('Service Load', res);
-            this.data = res.Data;
-            this.requestOptions.Pagination.TotalCount = res?.TotalCount;
-            this.onLoaded.next(res.Data);
+            this.data = res;
+            this.onLoaded.next(res);
             this.onStateChange(EServiceState.Browse);
             return res;
         } catch {
@@ -240,7 +235,6 @@ export class APIService<TModel extends IEntity> extends BaseService<TModel> {
 
             case EPushModel.SoftDelete:
                 this.data.splice(index, 1);
-                this.requestOptions.Pagination.TotalCount--;
                 break;
 
             case EPushModel.Append:
