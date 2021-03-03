@@ -16,17 +16,17 @@
         <br>
         <ion-list lines="none">
             <ion-item>
-                <ng-container *ngIf="claims; else skeleton">
-                    <ion-avatar [class.ion-border]="!thumbnail" style="width: 40px; height: 40px;">
-                        <ion-img [src]="uploadService.resources+thumbnail" *ngIf="thumbnail; else icon"></ion-img>
+                <ng-container *ngIf="account.claims; else skeleton">
+                    <ion-avatar [class.ion-border]="!account.userThumbnail" style="width: 40px; height: 40px;">
+                        <ion-img [src]="uploadService.resources+account.userThumbnail" *ngIf="account.userThumbnail; else icon"></ion-img>
                         <ng-template #icon>
                             <ion-icon name="person-outline" class="ion-font-xl" style="margin: 6px 7px;"></ion-icon>
                         </ng-template>
                     </ion-avatar>
                     <ion-label color="dark" class="ion-ml-3">
-                        <h6 class="ion-font-bold ion-font-md">{{ claims?.unique_name | titlecase }}</h6>
+                        <h6 class="ion-font-bold ion-font-md">{{ account.claims?.unique_name | titlecase }}</h6>
                         <ion-text color="medium">
-                            <small class="ion-font-sm">{{ claims?.email || 'Desconocido' }}</small>
+                            <small class="ion-font-sm">{{ account.claims?.email || 'Desconocido' }}</small>
                         </ion-text>
                     </ion-label>
                 </ng-container>
@@ -79,7 +79,7 @@
                 </ion-label>
             </ion-list-header>
             
-            <ion-item button detail="false" (click)="logout()">
+            <ion-item button detail="false" (click)="account.logout()">
                 <ion-icon name="power-outline"></ion-icon>
                 <ion-label color="dark" class="ion-ml-3">
                     <span class="ion-font-md">Cerrar sesion</span>

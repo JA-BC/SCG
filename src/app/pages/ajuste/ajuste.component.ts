@@ -1,69 +1,44 @@
 import { Component, OnInit } from '@angular/core';
 import { ThemeService } from '@core/services/theme.service';
-import { AuthService } from '@core/services/auth.service';
 import { TokenService } from '@core/services/token.service';
 import { parseJwt } from '@core/utils/functions';
-import { StorageService } from '@core/helpers/storage.service';
 import { UploadService } from '@providers/upload.service';
-import { IToken } from '@core/interfaces/auth.model';
+import { AccountService } from '@providers/account.service';
 
 @Component({
-    templateUrl: './ajuste.component.html'
+    templateUrl: './ajuste.component.html',
+    providers: [TokenService]
 })
 export class AjusteComponent implements OnInit {
 
-    private readonly storage = new StorageService();
-
-    thumbnail: string;
-    claims: any;
-
     constructor(
+        private readonly tokenService: TokenService,
+        private readonly uploadService: UploadService,
         public readonly theme: ThemeService,
-        public readonly auth: AuthService,
-        public readonly token: TokenService,
-        private readonly uploadService: UploadService
+        public readonly account: AccountService 
     ) { }
 
-    ngOnInit() { }
+    ngOnInit() {}
 
-    ionViewWillEnter() {
-        if (!this.claims) {
-            this.token.getToken().then(v => this.claims = parseJwt(v));
-        }
-
-        this.findThumbnail();
+    ionViewDidEnter() {
+        this.getThumbnail(); 
     }
 
-    async findThumbnail() {
-        const exists = await this.storage.get('PROFILE_THUMBNAIL') as string;
-
-        if (exists) {
-            if (!this.thumbnail || exists !== this.thumbnail) {
-                this.thumbnail = exists;
-            }
-
+    private async getThumbnail() {
+        if (this.account.userThumbnail) {
             return;
         }
 
-        const token = await this.token.getToken();
+        if (!this.account.claims) {
+            const token = await this.tokenService.getToken();
+            this.account.claims = parseJwt(token);
+        }
+
         const data = await this.uploadService.requery({
-            UserId: (parseJwt(token) as IToken).nameid
+            UserId: this.account.claims.nameid
         });
-        
-        // User has not profile img
-        if (!data) {
-            this.thumbnail = null;
-            return;
-        }
 
-        await this.storage.set('PROFILE_THUMBNAIL', data?.FilePath);
-        this.thumbnail = data?.FilePath;
-    }
-
-    async logout() {
-        await this.auth.logout();
-        this.claims = null;
-        this.storage.remove('PROFILE_THUMBNAIL');
+        this.account.userThumbnail = data?.FilePath;
     }
 
 }

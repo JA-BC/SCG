@@ -16,7 +16,7 @@ export class ImgThumbnailComponent implements OnInit {
 
     @Output() error = new EventEmitter();
 
-    private readonly typeFiles: string[] = ['image/png', 'image/jpeg'];
+    private readonly typeFiles: string[] = ['image/jpeg'];
     private readonly maxSizeMB: number = 2;
 
     constructor() { }

@@ -1,8 +1,8 @@
-import { HttpClient, HttpHeaders } from "@angular/common/http";
+import { HttpClient, HttpErrorResponse, HttpHeaders } from "@angular/common/http";
 import { EHttpMethod, IEntity, EServiceState, EPushModel, APIRequest, APIResponse } from "@core/interfaces/service.model";
 import { API_URL_TOKEN } from "@core/interfaces/type";
 import { AppInjector } from "@core/helpers/injector";
-import { throwError, Subject } from "rxjs";
+import { throwError, Subject, Observable } from "rxjs";
 import { catchError } from "rxjs/operators";
 import { ErrorHandler } from "@angular/core";
 
@@ -108,7 +108,9 @@ export abstract class BaseService<TModel> {
 export class APIService<TModel extends IEntity> extends BaseService<TModel> {
 
     private readonly _onState$ = new Subject<EServiceState>();
+    private readonly _onError$ = new Subject<Error | HttpErrorResponse>();
 
+    readonly onError: Observable<Error | HttpErrorResponse> = this._onError$.asObservable();
     readonly SERVICE_STATE = EServiceState;
 
     state: EServiceState = EServiceState.Browse;
@@ -141,9 +143,10 @@ export class APIService<TModel extends IEntity> extends BaseService<TModel> {
             console.log("Service Add: ", item);
             const res = await this.postMethod('add', item);
             this.onAdded.next(res as TModel);
-            this.onStateChange(EServiceState.Browse);
             return res as TModel;
-        } catch {
+        } catch(e) {
+            this._onError$.next(e);
+        } finally {
             this.onStateChange(EServiceState.Browse);
         }
     }
@@ -155,9 +158,10 @@ export class APIService<TModel extends IEntity> extends BaseService<TModel> {
             console.log("Service Update: ", item);
             const res = await this.postMethod(`update`, item);
             this.onUpdated.next(res as TModel);
-            this.onStateChange(EServiceState.Update);
             return res as TModel;
-        } catch {
+        } catch(e) {
+            this._onError$.next(e);
+        } finally {
             this.onStateChange(EServiceState.Update);
         }
     }
@@ -168,9 +172,10 @@ export class APIService<TModel extends IEntity> extends BaseService<TModel> {
             const item: TModel = Object.assign({}, this.model, model);
             console.log("Service Requery: ", item);
             const res = await this.postMethod(`requery`, item);
-            this.onStateChange(EServiceState.Browse);
             return res as TModel;
-        } catch {
+        } catch(e) {
+            this._onError$.next(e);
+        } finally {
             this.onStateChange(EServiceState.Browse);
         }
     }
@@ -179,12 +184,13 @@ export class APIService<TModel extends IEntity> extends BaseService<TModel> {
         try {
             this.onStateChange(EServiceState.Load);
             const res = await this.getMethod('select', options);
-            console.log('Service Load', res);
+            console.log('Service Load: ', res);
             this.data = res;
             this.onLoaded.next(res);
-            this.onStateChange(EServiceState.Browse);
             return res;
-        } catch {
+        } catch(e) {
+            this._onError$.next(e);
+        } finally {
             this.onStateChange(EServiceState.Browse);
         }
     }
@@ -196,9 +202,10 @@ export class APIService<TModel extends IEntity> extends BaseService<TModel> {
             console.log("Service Delete: ", item);
             const res = await this.postMethod(`delete`, item);
             this.onDeleted.next(res as TModel);
-            this.onStateChange(EServiceState.Browse);
             return res as TModel;
-        } catch {
+        } catch(e) {
+            this._onError$.next(e);
+        } finally {
             this.onStateChange(EServiceState.Browse);
         }
     }

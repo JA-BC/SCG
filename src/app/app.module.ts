@@ -14,6 +14,7 @@ import { ErrorService } from '@core/services/error.service';
 import { JWTAuthInterceptor, AuthErrorInterceptor } from '@core/services/http-interceptor';
 import { environment } from '@env/environment';
 import { AppInjector } from '@core/helpers/injector';
+import { AccountService } from '@providers/account.service';
 
 @NgModule({
   declarations: [AppComponent],
@@ -36,7 +37,8 @@ import { AppInjector } from '@core/helpers/injector';
     },
     {
       provide: HTTP_INTERCEPTORS,
-      useClass: AuthErrorInterceptor,
+      useFactory: (service: AccountService) => new AuthErrorInterceptor(service),
+      deps: [AccountService],
       multi: true
     },
     { provide: ErrorHandler, useClass: ErrorService }

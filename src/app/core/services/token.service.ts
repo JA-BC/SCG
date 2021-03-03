@@ -3,7 +3,7 @@ import { IToken } from '@core/interfaces/auth.model';
 import { parseJwt } from '../utils/functions';
 import { StorageService } from '../helpers/storage.service';
 
-@Injectable({ providedIn: 'root' })
+@Injectable()
 export class TokenService {
     private readonly storage = new StorageService();
 

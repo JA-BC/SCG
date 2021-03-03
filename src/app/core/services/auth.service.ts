@@ -1,34 +1,40 @@
-import { Injectable } from "@angular/core";
-import { NgForm } from "@angular/forms";
+import { HttpErrorResponse } from "@angular/common/http";
 import { Router } from "@angular/router";
 import { BaseService } from "@core/class/base.service";
-import { IUser } from "@core/interfaces/auth.model";
+import { AppInjector } from "@core/helpers/injector";
+import { IToken, IUser } from "@core/interfaces/auth.model";
 import { EServiceState } from "@core/interfaces/service.model";
+import { parseJwt } from "@core/utils/functions";
 import { ToastController } from "@ionic/angular";
-import { Subject } from "rxjs";
+import { Observable, Subject } from "rxjs";
 import { TokenService } from "./token.service";
 
-@Injectable({ providedIn: 'root' })
 export class AuthService extends BaseService<IUser> {
 
   private readonly _onState$ = new Subject<EServiceState>();
+  private readonly _onError$ = new Subject<Error | HttpErrorResponse>();
+  private readonly tokenService: TokenService = new TokenService();
+  private readonly router: Router = AppInjector.getInstance(Router);
+  private readonly toast: ToastController = AppInjector.getInstance(ToastController);
 
+  readonly onError: Observable<Error | HttpErrorResponse> = this._onError$.asObservable();
   readonly SERVICE_STATE = EServiceState;
+  readonly rootUrl: string = '/app';
+  readonly loginUrl: string = '/auth/login';
+  readonly changePasswordRedirectTo: string = '/app/ajuste';
 
   state: EServiceState = EServiceState.Browse;
 
   get loading() {
-      return this.state === this.SERVICE_STATE.Load;
-  }
+    return this.state === this.SERVICE_STATE.Load;
+  } 
 
   model: IUser = { };
+  claims: IToken;
+  userThumbnail: string;
 
-  constructor(
-    private readonly tokenService: TokenService,
-    private readonly router: Router,
-    private readonly toast: ToastController
-  ) {
-    super('account');
+  constructor(endpoint: string) {
+    super(endpoint);
   }
 
   async login(model?: IUser) {
@@ -36,10 +42,12 @@ export class AuthService extends BaseService<IUser> {
       this.onStateChange(EServiceState.Load);
       const item = Object.assign(this.model, model);
       const res = await this.postMethod('login', item);
-      await this.tokenService.setToken(res?.Token);
-      this.router.navigate(['/app']);
-      this.onStateChange(EServiceState.Browse);
-    } catch {
+      const token = await this.tokenService.setToken(res?.Token);
+      this.claims = parseJwt(token);
+      this.router.navigate([this.rootUrl]);
+    } catch (e) {
+      this._onError$.next(e);
+    } finally {
       this.onStateChange(EServiceState.Browse);
     }
   }
@@ -56,9 +64,10 @@ export class AuthService extends BaseService<IUser> {
       });
 
       await toast.present();
-      this.router.navigate(['/auth']);
-      this.onStateChange(EServiceState.Browse);
-    } catch {
+      this.router.navigate([this.loginUrl]);
+    } catch (e) {
+      this._onError$.next(e);
+    } finally {
       this.onStateChange(EServiceState.Browse);
     }
   }
@@ -69,7 +78,8 @@ export class AuthService extends BaseService<IUser> {
       const item = Object.assign(this.model, model);
       const res = await this.postMethod('changePassword', item);
       await this.tokenService.removeToken();
-      await this.tokenService.setToken(res?.Token);
+      const token = await this.tokenService.setToken(res?.Token);
+      this.claims = parseJwt(token);
 
       const toast = await this.toast.create({
         message: 'Operacion satisfactoria',
@@ -77,10 +87,11 @@ export class AuthService extends BaseService<IUser> {
       });
 
       await toast.present();
-      this.router.navigate(['/app/ajuste']);
-      this.onStateChange(EServiceState.Browse);
+      this.router.navigate([this.changePasswordRedirectTo]);
       return res;
-    } catch {
+    } catch (e) {
+      this._onError$.next(e);
+    } finally {
       this.onStateChange(EServiceState.Browse);
     }
 
@@ -98,7 +109,9 @@ export class AuthService extends BaseService<IUser> {
   async logout() {
     await this.postMethod('logout', this.model);
     this.tokenService.removeToken();
-    this.router.navigate(['/auth']);
+    this.claims = null;
+    this.userThumbnail = null;
+    this.router.navigate([this.loginUrl]);
   }
 
 }

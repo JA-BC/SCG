@@ -1,8 +1,8 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { IUser } from '@core/interfaces/auth.model';
-import { AuthService } from '@core/services/auth.service';
 import { clearForm } from '@core/utils/functions';
+import { AccountService } from '@providers/account.service';
 
 @Component({
     selector: 'app-login',
@@ -14,7 +14,7 @@ export class LoginComponent implements OnInit {
     model: IUser = { };
 
     constructor(
-        public readonly service: AuthService
+        public readonly service: AccountService
     ) { }
 
     ngOnInit(): void { }

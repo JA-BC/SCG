@@ -8,7 +8,9 @@ import { catchError, switchMap } from 'rxjs/operators';
 @Injectable()
 export class JWTAuthInterceptor implements HttpInterceptor {
 
-  constructor(private readonly tokenService: TokenService) {}
+  private readonly tokenService: TokenService = new TokenService();
+
+  constructor() {}
 
   intercept(req: HttpRequest<any> , next: HttpHandler): Observable<HttpEvent<any>> {
     return from(this.tokenService.getToken())
@@ -32,7 +34,15 @@ export class JWTAuthInterceptor implements HttpInterceptor {
 @Injectable()
 export class AuthErrorInterceptor implements HttpInterceptor {
 
-  constructor(public auth: AuthService) { }
+  private readonly auth: AuthService;
+
+  constructor(auth: AuthService) {
+    if (!auth) {
+      throw new Error('[AuthErrorInterceptor]: AuthService must be provided');
+    }
+
+    this.auth = auth;
+  }
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     return next.handle(req).pipe(catchError(err => {

@@ -1,28 +1,21 @@
 import { Component, OnInit } from '@angular/core';
-import { AuthService } from '@core/services/auth.service';
-import { TokenService } from '@core/services/token.service';
 import { IUser } from '@core/interfaces/auth.model';
-import { parseJwt } from '@core/utils/functions';
+import { AccountService } from '@providers/account.service';
  
 @Component({
     templateUrl: './change-password.component.html'
 })
 export class ChangePasswordComponent implements OnInit {
 
-    model: IUser = {};
+    model: IUser = {
+        UserName: this.service.claims.email
+    };
 
     constructor(
-        public readonly service: AuthService,
-        private readonly tokenService: TokenService
+        public readonly service: AccountService
     ) {}
 
     ngOnInit() {}
-
-    ionViewWillEnter() {
-        this.tokenService.getToken().then(v => {
-            this.model.UserName = parseJwt(v)?.email; // Is unique
-        })
-    }
 
 }
 

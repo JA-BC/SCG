@@ -2,53 +2,29 @@ import { Component, OnInit } from '@angular/core';
 import { StorageService } from '@core/helpers/storage.service';
 import { ToastController } from '@ionic/angular';
 import { UploadService } from '@providers/upload.service';
-import { TokenService } from '@core/services/token.service';
-import { parseJwt } from '@core/utils/functions';
-import { IToken } from '@core/interfaces/auth.model';
+import { AccountService } from '@providers/account.service';
 
 @Component({
     templateUrl: './perfil.component.html'
 })
 export class PerfilComponent implements OnInit {
 
-    private readonly storage = new StorageService();
-   
-    thumbnail: string;
-    claims: any = {};
-
     constructor(
         private readonly toast: ToastController,
         private readonly uploadService: UploadService,
-        private readonly tokenService: TokenService
+        public readonly account: AccountService
     ) {}
 
     ngOnInit() { }
-
-    ionViewWillEnter() {
-        this.tokenService.getToken().then(v => this.claims = parseJwt(v));
-
-        this.storage.get('PROFILE_THUMBNAIL').then((v: string) => {
-            if (!v) {
-                return;
-            }
-
-            if (!this.thumbnail || v !== this.thumbnail) {
-                this.thumbnail = v;
-            }
-        });
-    }
 
     async onUpload(file: File) {
         const form = new FormData();
         form.append('FileName', file.name);
         form.append('File', file);
-
-        const token = await this.tokenService.getToken();
-        form.append('UserId', (parseJwt(token) as IToken).nameid);
+        form.append('UserId', this.account.claims.nameid);
         
         const data = await this.uploadService.add(form);
-        
-        this.storageThumbnail(data);
+        this.account.userThumbnail = data?.FilePath;
     }
 
     async onUploadError(message: string) {
@@ -60,17 +36,6 @@ export class PerfilComponent implements OnInit {
 
         return await toast.present();
     }
-
-    private async storageThumbnail(data: any) {
-        const exists = await this.storage.get('PROFILE_THUMBNAIL');
-
-        if (exists) {
-            await this.storage.remove('PROFILE_THUMBNAIL');
-        }
-
-        await this.storage.set('PROFILE_THUMBNAIL', data?.FilePath);
-        this.thumbnail = data?.FilePath;
-        return data?.FilePath;
-    }
+    
 }
 
