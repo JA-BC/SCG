@@ -13,12 +13,17 @@ export const VALIDATIONS: { [key: string]: Partial<Validation> } = {
     password: {
         minLength: (length: number) => `Minimo ${length} caracteres`,
         required: 'Este campo debe ser valido',
-        pattern: 'Debe contener al menos 1 mayuscula o numero'
+        pattern: 'Debe contener al menos 1 mayuscula y numeros'
+    },
+    username: {
+        required: 'Este campo debe ser valido',
+        pattern: 'Debe contener letras, numeros y simbolos (-, _)',
+        minLength: (length: number) => `Minimo ${length} caracteres`,
     },
     newPassword: {
         minLength: (length: number) => `Minimo ${length} caracteres`,
         required: 'Este campo debe ser valido',
-        pattern: 'Debe contener al menos 1 mayuscula o numero'
+        pattern: 'Debe contener al menos 1 mayuscula y numeros'
     },
     costo: {
         required: 'Este campo es obligatorio',

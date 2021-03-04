@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { IUser } from '@core/interfaces/auth.model';
 import { AccountService } from '@providers/account.service';
+import { INPUT_PATTERNS } from '@core/constants/pattern';
 
 @Component({
     selector: 'app-register',
@@ -8,6 +9,7 @@ import { AccountService } from '@providers/account.service';
 })
 export class RegisterComponent implements OnInit {
 
+    PATTERNS = INPUT_PATTERNS;
     model: IUser = { };
 
     constructor(

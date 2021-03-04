@@ -30,7 +30,8 @@
                 <ion-col size="12" sizeMd="6">
                     <ion-input-wrapper [ctrl]="username" label="Nombre de usuario">
                         <ion-input class="ion-input-custom" placeholder="Nombre de suario" #username="ngModel"
-                            [(ngModel)]="model.UserName" name="username" required>
+                            [(ngModel)]="model.UserName" name="username" required [pattern]="PATTERNS.username"
+                            minlength="4" maxlength="16">
                         </ion-input>
                     </ion-input-wrapper>
                 </ion-col>
@@ -40,7 +41,7 @@
                 <ion-col size="12" sizeMd="6">
                     <ion-input-wrapper [ctrl]="email" label="Correo electronico">
                         <ion-input class="ion-input-custom" placeholder="Correo electronico" #email="ngModel"
-                            [(ngModel)]="model.Email" name="email" required>
+                            [(ngModel)]="model.Email" name="email" required [pattern]="PATTERNS.email">
                         </ion-input>
                     </ion-input-wrapper>
                 </ion-col>
