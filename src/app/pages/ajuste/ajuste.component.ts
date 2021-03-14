@@ -38,7 +38,9 @@ export class AjusteComponent implements OnInit {
             UserId: this.account.claims.nameid
         });
 
-        this.account.userThumbnail = data?.FilePath || 'Resources/Images/no-profile.png';
+        this.account.userThumbnail = data?.FilePath
+                                        ? this.uploadService.resources + data?.FilePath
+                                        : 'svg/person-circle-outline.svg';
     }
 
 }

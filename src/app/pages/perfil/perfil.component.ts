@@ -24,7 +24,7 @@ export class PerfilComponent implements OnInit {
         form.append('UserId', this.account.claims.nameid);
         
         const data = await this.uploadService.add(form);
-        this.account.userThumbnail = data?.FilePath;
+        this.account.userThumbnail = this.uploadService.resources + data?.FilePath;
     }
 
     async onUploadError(message: string) {

@@ -18,10 +18,7 @@
             <ion-item>
                 <ng-container *ngIf="account.claims; else skeleton">
                     <ion-avatar [class.ion-border]="!account.userThumbnail" style="width: 40px; height: 40px;">
-                        <ion-img [src]="uploadService.resources+account.userThumbnail" *ngIf="account.userThumbnail; else icon"></ion-img>
-                        <ng-template #icon>
-                            <ion-icon name="person-outline" class="ion-font-xl" style="margin: 6px 7px;"></ion-icon>
-                        </ng-template>
+                        <ion-img [src]="account.userThumbnail"></ion-img>
                     </ion-avatar>
                     <ion-label color="dark" class="ion-ml-3">
                         <h6 class="ion-font-bold ion-font-md">{{ account.claims?.unique_name | titlecase }}</h6>

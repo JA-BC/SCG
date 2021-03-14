@@ -3,17 +3,13 @@
     [ngStyle]="{'width': dimension[0]+'px', 'height': dimension[1]+'px' }">
 
     <!-- Thumbnail -->
-    <ion-avatar class="ion-w-100 ion-h-100" [class.ion-border]="!imageUrl">
-        <ion-img [src]="imageUrl" *ngIf="imageUrl; else icon"></ion-img>
+    <ion-avatar class="ion-w-100 ion-h-100">
+        <ion-img [src]="imageUrl"></ion-img>
 
         <div class="ion-absolute ion-top-0 ion-left-0 ion-flex ion-align-items-center ion-justify-content-center ion-w-100 ion-h-100 ion-round"
             style="z-index: 100; background-color: rgba(255, 255, 255, .6);" *ngIf="loading">
             <ion-spinner color="primary"></ion-spinner>
         </div>
-
-        <ng-template #icon>
-            <ion-icon name="person-outline" style="font-size: 48px; margin: 16px 20px"></ion-icon>
-        </ng-template>
     </ion-avatar>
     
     <!-- Camera Icon -->

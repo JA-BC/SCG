@@ -15,7 +15,7 @@
             <ion-col>
                 <app-img-thumbnail (upload)="onUpload($event)" (error)="onUploadError($event)"
                     [loading]="uploadService.loading"
-                    [imageUrl]="account.userThumbnail ? uploadService.resources+account.userThumbnail : null">
+                    [imageUrl]="account.userThumbnail">
                 </app-img-thumbnail>
             </ion-col>
         </ion-row>
